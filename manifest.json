@@ -1,0 +1,112 @@
+{
+    "dir": "ltr",
+    "lang": "en",
+    "name": "Holo's Flashcards",
+    "scope": "/2018_SSE_Dewitte_Ruben/",
+    "display": "standalone",
+    "start_url": "https://dewitteruben.github.io/2018_SSE_Dewitte_Ruben/",
+    "short_name": "Holos Flashcards",
+    "theme_color": "transparent",
+    "description": "",
+    "orientation": "portrait",
+    "background_color": "transparent",
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "/images/eba7e2c1-1a65-cc6a-ab94-f831b41c49ad.webPlatform.png",
+            "sizes": "44x44",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/4737840f-cfdf-c442-b4a7-66ddfaeee8e3.webPlatform.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/6a131e60-cbe4-82ac-b82f-52ec091654d1.webPlatform.png",
+            "sizes": "1240x600",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/42ce5f02-d0c6-dc7d-a0ae-9b50875cfbeb.webPlatform.png",
+            "sizes": "300x300",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/68545706-eb33-b694-b58a-2d4e1cc9f12f.webPlatform.png",
+            "sizes": "150x150",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/834f23c8-1f54-1007-01d1-9389e869a85d.webPlatform.png",
+            "sizes": "88x88",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/25f230eb-b208-05f3-e492-8bdcf9f70ba1.webPlatform.png",
+            "sizes": "24x24",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/383dc169-7294-ccab-226e-7fbb7bf02063.webPlatform.png",
+            "sizes": "50x50",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/97c2249f-c1f6-c40d-e48a-f5120fb9e7d5.webPlatform.png",
+            "sizes": "620x300",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/ac1edaac-625e-a76b-a73e-94bee8a880c8.webPlatform.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/9ee28fcf-9508-3ea1-eb83-0177238b80b3.webPlatform.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/b86f024e-8ec9-c5be-1d1b-9c52004af92c.webPlatform.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/2244658c-8f1e-59b3-2e82-fc44a8b1de6f.webPlatform.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/e98987bf-b6bf-f18d-b1ed-9450f5a90fe7.webPlatform.png",
+            "sizes": "36x36",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/84b4eaf9-243a-0d77-caef-9993bb3b37b2.webPlatform.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/4825a3e0-a054-81d1-de50-8d18e0c54154.webPlatform.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/5038306f-97e1-3d44-f2b8-e4f4357abe40.webPlatform.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/4345f08d-b7d2-6ae7-dc22-f41cc61d62b9.webPlatform.png",
+            "sizes": "120x120",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/1be29e38-16b7-b675-9bc4-3de0ec6bdf32.webPlatform.png",
+            "sizes": "76x76",
+            "type": "image/png"
+        }
+    ]
+}

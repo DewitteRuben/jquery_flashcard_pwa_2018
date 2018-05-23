@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holocards</title>
+    <link rel="stylesheet" href="css/screen.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/animsition.min.css">
+</head>
+<body class="animsition">
+<div class="navbar-fixed navbar-fixed-tabbed">
+    <nav class="nav-extended blue lighten-2">
+        <div class="nav-wrapper">
+            <a href="#/" class="brand-logo">Holocards</a>
+            <a href="#/" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a class="nav-addcardset animsition-link" data-animsition-out-class="fade-out-down"
+                       data-animsition-out-duration="225" href="addcardset.html">Add cardset</a></li>
+                <li><a class="nav-addcard animsition-link" href="addcard.html" data-animsition-out-class="fade-out-down"
+                       data-animsition-out-duration="225">Add card</a></li>
+                <li><a class="nav-settings animsition-link" href="settings.html"
+                       data-animsition-out-class="fade-out-down"
+                       data-animsition-out-duration="225">Settings</a></li>
+            </ul>
+        </div>
+        <div class="nav-content">
+            <ul class="tabs tabs-transparent">
+            </ul>
+        </div>
+
+    </nav>
+</div>
+<div>
+    <ul class="sidenav" id="mobile-demo">
+        <li><a class="animsition-link" data-animsition-out-class="fade-out-down"
+               data-animsition-out-duration="225" href="addcardset.html">Add cardset</a></li>
+        <li><a class="animsition-link" href="addcard.html" data-animsition-out-class="fade-out-down"
+               data-animsition-out-duration="225">Add card</a></li>
+        <li><a class="animsition-link" href="settings.html" data-animsition-out-class="fade-out-down"
+               data-animsition-out-duration="225">Settings</a></li>
+    </ul>
+</div>
+
+<main>
+    <div class="row">
+        <div id="tab-all" class="cards">
+            <ul class="collection with-header collection-cardsets">
+                <li class="collection-item">No cardsets have been created yet!</li>
+            </ul>
+        </div>
+        <div id="tab-filtered" class="cards-filtered">
+
+        </div>
+    </div>
+</main>
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large waves-effect waves-light blue darken-1">
+        <i class="material-icons">add</i>
+    </a>
+    <ul>
+        <li>
+            <a class="btn-floating animsition-link btn-fab-add-cardset blue darken-1 tooltipped" data-position="left"
+               data-tooltip="Add a cardset!" href="addcardset.html" data-animsition-out-class="fade-out-down"
+               data-animsition-out-duration="225">
+                <i class="material-icons">create_new_folder</i>
+            </a>
+        </li>
+        <li>
+            <a class="btn-floating animsition-link btn-fab-add-card blue darken-1 tooltipped" href="addcard.html"
+               data-animsition-out-class="fade-out-down"
+               data-animsition-out-duration="225"
+               data-position="left"
+               data-tooltip="Add a card!">
+                <i class="material-icons">add</i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<a href="cardgame.html" id="gamePageAnchor" class="hidden animsition-link"
+   data-animsition-out-class="fade-out-left"
+   data-animsition-out-duration="225"></a>
+
+<script src="js/utilities.js"></script>
+<script src="js/localforage.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/animsition.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script src="js/materializeinit.js"></script>
+<script src="js/animsitioninit.js"></script>
+<script src="js/easytimer.min.js"></script>
+<script src="js/DomainModule.js"></script>
+<script src="js/DataModule.js"></script>
+<script src="js/GuiModule.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>

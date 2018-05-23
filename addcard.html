@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holocards</title>
+    <link rel="stylesheet" href="css/screen.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/animsition.min.css">
+</head>
+<body class="animsition">
+
+<div class="navbar-fixed">
+
+    <nav class="blue lighten-2">
+        <div class="nav-wrapper">
+            <a href="#/" class="brand-logo center">Card</a>
+            <ul class="left">
+                <li><a href="javascript: history.back()"
+                       class="animsition-link"
+                       data-animsition-out-class="fade-out-left"
+                       data-animsition-out-duration="225">
+                    <i class="material-icons">arrow_back</i>
+                </a></li>
+            </ul>
+            <ul class="right">
+                <li><a class="link-check-form" href="#/"><i class="material-icons">check</i></a></li>
+                <li>
+                    <a href="#/" class="dropdown-trigger" data-target="more-options-dropdown">
+                        <i class="material-icons">more_vert</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <ul id="more-options-dropdown" class="dropdown-content">
+            <li><a href="index.html" data-animsition-out-class="fade-out-down"
+                   data-animsition-out-duration="225"
+                   class="animsition-link blue-lighten-2-color"><i class="material-icons ">home</i>Home</a></li>
+            <li><a href="addcardset.html" data-animsition-out-class="fade-out-down"
+                   data-animsition-out-duration="225"
+                   class="animsition-link blue-lighten-2-color"><i class="material-icons ">create_new_folder</i>Cardset</a>
+            </li>
+            <li><a href="addcard.html" data-animsition-out-class="fade-out-down"
+                   data-animsition-out-duration="225"
+                   class="animsition-link blue-lighten-2-color"><i class="material-icons ">add</i>Card</a></li>
+        </ul>
+    </nav>
+</div>
+<main>
+    <div class="row">
+        <form class="form-add-card" autocomplete="off">
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="card-name">Name:</label>
+                    <input id="card-name" type="text" placeholder="Enter a name" required class="validate">
+                </div>
+                <div class="input-field col s12">
+                    <select id="card-types" required name="card-types" class="validate">
+                        <option value="" disabled selected>Choose a card type</option>
+                        <option value="SA">Single Answer</option>
+                        <option value="MC">Multiple Choice</option>
+                        <option value="TF">True/False</option>
+                    </select>
+                    <label for="card-types">Card type:</label>
+                </div>
+
+                <div class="input-field col s9">
+                    <select id="available-cardsets" required name="available-cardsets" class="validate">
+                    </select>
+                    <label for="available-cardsets">Add to cardset:</label>
+                </div>
+                <div class="input-field col s3">
+                    <a href="addcardset.html"
+                       data-animsition-out-class="fade-out-up"
+                       data-animsition-out-duration="225"
+                       class="btn-small animsition-link btn-create-cardset
+                               waves-effect waves-light blue lighten-2
+                                "><i
+                            class="material-icons">add</i></a>
+                </div>
+
+
+                <div class="input-field col s9">
+                    <label for="card-question">Question / Input:</label>
+                    <input id="card-question" placeholder="Enter your question" name="question" type="text"
+                           class="validate" required>
+                    <span class="label">Image: <span id="imageName">none</span></span>
+                </div>
+
+                <div class="file-field col s3">
+                    <div class="file-field">
+                        <div class="btn blue lighten-2">
+                            <span><i class="material-icons">photo</i></span>
+                            <input id="input-card-picture" type="file" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formAnswerInput">
+                    <div class="singleAnswer answerInput hidden">
+                        <div class="input-field  col s9">
+                            <label for="card-answer">Answer:</label>
+                            <input id="card-answer" name="answer" placeholder="Enter an answer" type="text"
+                                   class="validate">
+                        </div>
+
+                        <div class="col s3">
+                            <a href="#/"
+                               class="btn-small btn-translate-modal waves-effect waves-light blue lighten-2" disabled><i
+                                    class="material-icons">g_translate</i></a>
+                        </div>
+
+                        <div class="col s12">
+                            <label>
+                                <input id="checkbox-type-answer" type="checkbox" class="filled-in"/>
+                                <span>Enable type the answer for this card</span>
+                            </label>
+
+                        </div>
+
+
+                    </div>
+                    <div class="trueFalse hidden answerInput col s12">
+                        <a class="left waves-effect waves-light btn answer-false grey red" data-value="false"><i
+                                class="material-icons right">close</i>False</a>
+                        <a class="right waves-effect waves-light btn answer-true grey green" data-value="true"><i
+                                class="material-icons right">check</i>True</a>
+                    </div>
+                    <div class="multipleChoice hidden answerInput col s12">
+
+                        <div class="input-field">
+                            <label for="card-answer-mc">Answer:</label>
+                            <input id="card-answer-mc" placeholder="Enter an answer" type="text"
+                                   class="validate">
+                        </div>
+                        <div class="input-field">
+                            <label for="card-possible-mc">Possible guesses:</label>
+                            <input id="card-possible-mc" type="text" placeholder="Example: apple, orange, tree"
+                                   class="validate">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="btns-form-control col s12">
+                    <button class="btn waves-effect left waves-light btn-add-card blue lighten-2" type="submit"
+                            name="action">Add Card
+                        <i class="material-icons left">add</i>
+                    </button>
+
+                    <a href="#/" class="btn waves-effect right waves-light btn-preview-card blue lighten-2">Preview
+                        <i class="material-icons right">search</i>
+                    </a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</main>
+
+
+<div id="translateModal" class="modal">
+    <div class="modal-content">
+        <div class="input-field">
+            <label for="card-input-t">Input:</label>
+            <input type="text"
+                   placeholder="Enter text to translate!"
+                   id="card-input-t"
+                   name="card-input-t">
+        </div>
+
+        <div class="input-field">
+            <select id="available-languages" name="available-languages" class="validate">
+            </select>
+            <label for="available-languages">Target language:</label>
+        </div>
+
+        <div class="input-field">
+            <a href="#/" class="btn waves-effect waves-light blue lighten-2 btn-translate-input">Translate
+                <i class="material-icons right">g_translate</i>
+            </a>
+        </div>
+
+        <div class="progressbar hidden col s12">
+            <div class="progress">
+                <div class="indeterminate"></div>
+            </div>
+        </div>
+
+        <div class="input-field">
+            <label for="card-ouput-t">Translated output:</label>
+            <input type="text"
+                   disabled
+                   placeholder="Tap the button to translate"
+                   id="card-ouput-t"
+                   name="card-ouput-t">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close translate-decline waves-effect waves-green btn-flat">Decline</a>
+        <a href="#!" class="modal-close translate-confirm waves-effect waves-green btn-flat">Confirm</a>
+    </div>
+</div>
+
+
+<script src="js/utilities.js"></script>
+<script src="js/localforage.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/animsition.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script src="js/materializeinit.js"></script>
+<script src="js/translate.js"></script>
+<script src="js/DomainModule.js"></script>
+<script src="js/DataModule.js"></script>
+<script src="js/GuiModule.js"></script>
+<script src="js/addcard.js"></script>
+<script src="js/animsitioninit.js"></script>
+</body>
+</html>

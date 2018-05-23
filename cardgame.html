@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holocards</title>
+    <link rel="stylesheet" href="css/animsition.min.css">
+    <link rel="stylesheet" href="css/screen.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body class="animsition">
+<header>
+    <div class="navbar-fixed">
+        <nav class="blue lighten-2">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo center"><h5 id="gameTimer">00:00:00</h5></a>
+                <ul class="left">
+                    <li><a href="index.html"
+                           class="animsition-link"
+                           data-animsition-out-class="fade-out-right"
+                           data-animsition-out-duration="225">
+                        <i class="material-icons">home</i>
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<main>
+    <div class="container">
+        <div class="row">
+
+            <!--<div class="col s12">-->
+            <!---->
+            <!--</div>-->
+
+            <div class="col s12">
+                <div class="card card-play">
+                    <i class="smiley material-icons">sentiment_neutral</i>
+                    <a class="btn-game-flip-card" href="#/">
+                        <i class="material-icons faint-black"
+                           style="position:absolute;right:0;top:45%;">
+                            keyboard_arrow_right</i>
+                    </a>
+                    <span class="card-side">FRONT</span>
+                    <span class="card-name">empty name</span>
+                    <div class="card-content">
+                        <!--<span class="card-title">empty title</span>-->
+                        <div class="img-wrapper">
+                            <h5 class="center-align card-qa">empty qa</h5>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="answerControls">
+                <div class="singleAnswerControls control hidden col s12">
+                    <div class="left">
+                        <a class="waves-effect waves-light btn btn-wrong-sa red"><i
+                                class="material-icons right">close</i>Wrong</a>
+                    </div>
+                    <div class="right">
+                        <a class="waves-effect waves-light btn btn-correct-sa green"><i
+                                class="material-icons right">check</i>Correct</a>
+                    </div>
+                </div>
+
+                <div class="trueFalseControls control hidden col s12">
+                    <div class="left">
+                        <a class="waves-effect waves-light btn btn-false-tf red"><i
+                                class="material-icons right">close</i>False</a>
+                    </div>
+                    <div class="right">
+                        <a class="waves-effect waves-light btn btn-true-tf green"><i
+                                class="material-icons right">check</i>True</a>
+                    </div>
+                </div>
+
+                <form class="typeAnswerControls control hidden">
+                    <div class="col s12">
+                        <label for="game-type-answer">Type the answer:</label>
+                        <input id="game-type-answer" required type="text" class="validate">
+                    </div>
+                    <div class="col s12">
+                        <button class="btn waves-effect waves-light orange darken-1 btn-check-type-answer"
+                                type="submit"
+                                name="action">Check
+                            <i class="material-icons right">question_answer</i>
+                        </button>
+                    </div>
+                </form>
+
+                <form class="multipleChoiceControls control hidden">
+                    <div class="radioAnswerButtons col s12">
+
+                    </div>
+                    <div class="input-field col s12">
+                        <button class="btn waves-effect waves-light orange darken-1 btn-check-type-answer"
+                                type="submit"
+                                name="action">Check
+                            <i class="material-icons right">question_answer</i>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="col s12">
+                    <div class="left">
+                        <p class="gameCardsCorrectlyAnswered">Answered: 0/0</p>
+                    </div>
+                    <div class="right">
+                        <p class="gameCardsAnswered">Answered: 0/0</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="page-footer blue lighten-2 footer-fixed">
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <div class="left">
+                    <a class="waves-effect waves-light blue btn-small btn-game-prev"><i class="material-icons left">arrow_back</i>Prev.</a>
+                </div>
+                <div class="right">
+                    <a class="waves-effect waves-light blue btn-small btn-game-next"><i class="material-icons right">arrow_forward</i>Next</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="js/utilities.js"></script>
+<script src="js/localforage.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/animsition.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script src="js/materializeinit.js"></script>
+<script src="js/easytimer.min.js"></script>
+<script src="js/DomainModule.js"></script>
+<script src="js/DataModule.js"></script>
+<script src="js/GuiModule.js"></script>
+<script src="js/GameModule.js"></script>
+<script src="js/gamePage.js"></script>
+<script src="js/animsitioninit.js"></script>
+</body>
+</html>

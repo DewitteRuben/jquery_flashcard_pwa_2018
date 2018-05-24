@@ -1,7 +1,7 @@
 var cacheName = "v1";
 //
 var cacheFiles = [
-    "/",
+    "",
     "index.html",
     "addcard.html",
     "addcardset.html",

@@ -6,6 +6,10 @@ let addCardModule = (function () {
         "MC": ".multipleChoice",
     };
 
+    let MESSAGES = {
+        NO_CARDSETS: "No cardsets have been created yet!",
+    };
+
     function init() {
         populateCardsetSelect();
         populateLanguagesSelect();

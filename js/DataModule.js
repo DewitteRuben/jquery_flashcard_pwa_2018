@@ -79,35 +79,8 @@ let DataModule = function () {
             .catch(e => Promise.reject(`Failed to update name and category of the cardset ${oldName}`));
     }
 
-    function pUpdateCardInCardset(card, cardsetName) {
-        return pGetCardset(cardsetName).then(function (cardset) {
-            let oldCard = cardset.cards.filter(c => c.id === card.id)[0];
-        })
-    }
-
     function pSetCardsetMap(map) {
         return store.setItem(STORAGE.CARDSETS, map);
-    }
-
-    function pRenameExistingCardset(oldName, newName) {
-        pGetAllCardsets().then(function (result) {
-            console.log(result);
-        })
-    }
-
-
-    function addCardToCardSet(card, cardsetName, cb) {
-        getCardSet(cardsetName, function (cardset, err) {
-            if (err) {
-                cb(err, true);
-            } else {
-                card.id = cardset.name + "-" + cardset.cards.length;
-                cardset.addCard(card);
-                addUpdateCardSet(cardset, function (result) {
-                    cb(cardset, null);
-                });
-            }
-        })
     }
 
     function pAddUpdateCardset(cardset) {
@@ -138,18 +111,6 @@ let DataModule = function () {
         }).then(uniqueCardset => pAddUpdateCardset(uniqueCardset)).catch(err => Promise.reject(err));
     }
 
-    function addUpdateCardSet(cardSet, cb) {
-        getAllCardSets(function (cardMap, err) {
-            if (err) {
-
-            } else {
-                cardMap.set(cardSet.name, cardSet);
-                console.log(cardMap);
-                store.setItem(STORAGE.CARDSETS, cardMap, cb);
-            }
-        })
-    }
-
     function pDeleteCardFromCardset(cardID) {
         let cardsetName = cardID.split("-")[0];
         return pGetCardset(cardsetName).then(function (cardset) {
@@ -160,17 +121,6 @@ let DataModule = function () {
         }).catch(function (err) {
             return new Promise.reject("Failed to delete card from cardset!");
             // return new Promise.reject(err);
-        });
-    }
-
-    function deleteCardSet(key, cb) {
-        getAllCardSets(function (cardMap, err) {
-            if (err) {
-
-            } else {
-                cardMap.delete(key);
-                store.setItem(STORAGE.CARDSETS, cardMap, cb);
-            }
         });
     }
 
@@ -198,20 +148,6 @@ let DataModule = function () {
         return pGetAllCardsets()
             .then((result) => result.get(key) ? result.get(key) : null)
             .catch((err) => Promise.reject("Failed to get card from the database!"));
-    }
-
-    function getCardSet(key, cb) {
-        getAllCardSets(function (cardSet, err) {
-            if (err) {
-                cb(err, true);
-            } else {
-                cb(cardSet.get(key), null);
-            }
-        });
-    }
-
-    function pUpdateCategoryAndNameCardset(newCategory, newName) {
-
     }
 
     function postData(url) {
@@ -249,33 +185,12 @@ let DataModule = function () {
         });
     }
 
-    function pgetCardByID(cardID) {
-        let cardsetID = cardID.split("-")[0];
-        return pGetCardset(cardsetID).then(function (result) {
-            return result.cards.filter(c => c.id === cardID)[0];
-        });
-    }
-
     function clearPictureData() {
         return store.removeItem(KEYS.PICTURE);
     }
 
     function getPictureData() {
         return store.getItem(KEYS.PICTURE);
-    }
-
-    function ensureUniqueCategoryEntry(cardsetName, category) {
-        return function (map) {
-            for (let [key, value] of map) {
-                let cardset = value;
-                if (UtilModule.isEqualToCaseInsensitive(cardset.name, cardsetName))
-                    return Promise.reject("A cardset with that name already exists!");
-                if (UtilModule.isEqualToCaseInsensitive(category, cardset.category)) {
-                    category = cardset.category;
-                }
-            }
-            return new DomainModule.CardSet(cardsetName, category);
-        }
     }
 
     function startCurrentGame(cardsetName) {
@@ -285,10 +200,6 @@ let DataModule = function () {
             }
             return cardsetName;
         }).then(result => store.setItem(KEYS.GAME, cardsetName.toString()));
-    }
-
-    function clearCurrentGame() {
-        return store.removeItem(KEYS.GAME);
     }
 
     function getCurrentGame() {
@@ -304,32 +215,20 @@ let DataModule = function () {
     }
 
     return {
-        getAllCardSets: getAllCardSets,
-        addUpdateCardSet: addUpdateCardSet,
-        getCardSet: getCardSet,
-        addCardToCardSet: addCardToCardSet,
-        deleteCardSet: deleteCardSet,
         postData: postData,
+        pGetCardset:pGetCardset,
         pFileReader: pFileReader,
         savePicture: savePicture,
         clearPictureData: clearPictureData,
         getPictureData: getPictureData,
-        pSetCardsetMap: pSetCardsetMap,
         startCurrentGame: startCurrentGame,
-        clearCurrentGame: clearCurrentGame,
         getCurrentGame: getCurrentGame,
         pDeleteCardFromCardset: pDeleteCardFromCardset,
-        setCurrentCard: setCurrentCard,
-        pgetCardByID: pgetCardByID,
         pGetAllCardsets: pGetAllCardsets,
         getCurrentCard: getCurrentCard,
         pUpdateCardset: pUpdateCardset,
         pAddCardToCardset:pAddCardToCardset,
-        pGetCardset: pGetCardset,
         pAddCardset:pAddCardset,
         pDeleteCardset: pDeleteCardset,
-        pUpdateCardInCardset: pUpdateCardInCardset,
-        pAddUpdateCardset: pAddUpdateCardset,
-        ensureUniqueCategoryEntry: ensureUniqueCategoryEntry
     }
 }();

@@ -11,7 +11,8 @@ let indexModule = (function () {
     };
 
     let URL = {
-        GAME_PAGE: "cardgame.html"
+        GAME_PAGE: "cardgame.html",
+        ADD_CARD_PAGE: "addcard.html"
     };
 
     function init() {
@@ -77,7 +78,6 @@ let indexModule = (function () {
     function populateCardsetsList($list) {
         return function (HTMLString) {
             $list.html(HTMLString);
-            bindCardsetEventHandlers();
         }
     }
 
@@ -108,6 +108,7 @@ let indexModule = (function () {
             .then(arrByCategory2HTMLString)
             .then(ensureEmptyCardset)
             .then(populateCardsetsList($list))
+            .then(bindCardsetEventHandlers)
             .catch(err => console.log(err));
     }
 
@@ -116,7 +117,7 @@ let indexModule = (function () {
         e.stopPropagation();
         let cardsetName = $(this).parents("section").data("cardset");
         sessionStorage.setItem("currentCardset", cardsetName);
-        $(".nav-addcard").click();
+        window.location.href = URL.ADD_CARD_PAGE;
     }
 
     function showEditCardsetModal(oldName, oldCategory) {
@@ -162,17 +163,17 @@ let indexModule = (function () {
         e.stopPropagation();
         let cardSetName = $(this).parents("section").data("cardset");
         DataModule.startCurrentGame(cardSetName).then((result) => {
-            $("#gamePageAnchor").click();
+            window.location.href = URL.GAME_PAGE;
         }).catch(err => GuiModule.showToast(err, ""));
     }
 
     function bindCardsetEventHandlers() {
         $(".collapsible").collapsible();
-        $(".collapsible-header").on("click", evToggleHide);
-        $(".home-add-cardset").on("click", headerAddCardCardset)
-            .next().on("click", evShowEditCardsetModal)
-            .next().on("click", evShowDeleteCardsetModal)
-            .next().on("click", evInitNewGame);
+        $(".collapsible-header").off().on("click", evToggleHide);
+        $(".home-add-cardset").off().on("click", headerAddCardCardset)
+            .next().off().on("click", evShowEditCardsetModal)
+            .next().off().on("click", evShowDeleteCardsetModal)
+            .next().off().on("click", evInitNewGame);
     }
 
     function evToggleHide(e) {

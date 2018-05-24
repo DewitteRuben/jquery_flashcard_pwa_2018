@@ -35,11 +35,13 @@ let gamePageModule = (function() {
 
     function initGame() {
         DataModule.getCurrentGame().then(function (name) {
-            DataModule.getCardSet(name, function (cardSet) {
-                console.log(cardSet);
-                GameModule.initGame(new DomainModule.Game(cardSet));
+            return name;
+        }).then(function(name) {
+            DataModule.pGetCardset(name).then(function(cardset) {
+                console.log(cardset);
+                GameModule.initGame(new DomainModule.Game(cardset));
                 GuiModule.updateGameCardLayout(GameModule.getGame());
-            });
+            })
         })
     }
 
@@ -54,5 +56,4 @@ let gamePageModule = (function() {
 
 $(document).ready(function () {
     gamePageModule.init();
-
 });

@@ -13,6 +13,7 @@ var cacheFiles = [
     "js/addcardset.js",
     "js/DataModule.js",
     "js/DomainModule.js",
+    "js/GameModule.js",
     "js/gamePage.js",
     "js/index.js",
     "js/jquery-3.3.1.min.js",

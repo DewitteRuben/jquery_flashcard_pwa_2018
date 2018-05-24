@@ -1,25 +1,25 @@
 var cacheName = "v1";
 //
 var cacheFiles = [
-    "/",
-    // "/addcard.html",
-    // "/addcardset.html",
-    // "/cardgame.html",
-    // "/css/screen.css",
-    // "/css/materialize.css",
-    // "/css/font-awesome.min.css",
-    // "/js/addcard.js",
-    // "/js/addcardset.js",
-    // "/js/DataModule.js",
-    // "/js/DomainModule.js",
-    // "/js/gamePage.js",
-    // "/js/index.js",
-    // "/js/jquery-3.3.1.min.js",
-    // "/js/localforage.min.js",
-    // "/js/materialize.min.js",
-    // "/js/materializeinit.js",
-    // "/js/translate.js",
-    // "/js/utilities.js"
+    "index.html",
+    "addcard.html",
+    "addcardset.html",
+    "cardgame.html",
+    "css/screen.css",
+    "css/materialize.css",
+    "css/font-awesome.min.css",
+    "js/addcard.js",
+    "js/addcardset.js",
+    "js/DataModule.js",
+    "js/DomainModule.js",
+    "js/gamePage.js",
+    "js/index.js",
+    "js/jquery-3.3.1.min.js",
+    "js/localforage.min.js",
+    "js/materialize.min.js",
+    "js/materializeinit.js",
+    "js/translate.js",
+    "js/utilities.js"
 ];
 //
 // self.addEventListener('install', function(event) {
@@ -145,7 +145,7 @@ var cacheFiles = [
 self.addEventListener('install', function(e) {
     e.waitUntil(
         caches.open(cacheName).then(function(cache) {
-            return cache.addAll(['/index.html']);
+            return cache.addAll(cacheFiles);
         })
     );
 });

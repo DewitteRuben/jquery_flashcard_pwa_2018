@@ -1,26 +1,26 @@
-// var cacheName = "v1";
+var cacheName = "v1";
 //
-// var cacheFiles = [
-//     "/index.html",
-//     "/addcard.html",
-//     "/addcardset.html",
-//     "/cardgame.html",
-//     "/css/screen.css",
-//     "/css/materialize.css",
-//     "/css/font-awesome.min.css",
-//     "/js/addcard.js",
-//     "/js/addcardset.js",
-//     "/js/DataModule.js",
-//     "/js/DomainModule.js",
-//     "/js/gamePage.js",
-//     "/js/index.js",
-//     "/js/jquery-3.3.1.min.js",
-//     "/js/localforage.min.js",
-//     "/js/materialize.min.js",
-//     "/js/materializeinit.js",
-//     "/js/translate.js",
-//     "/js/utilities.js"
-// ];
+var cacheFiles = [
+    "/index.html",
+    "/addcard.html",
+    "/addcardset.html",
+    "/cardgame.html",
+    "/css/screen.css",
+    "/css/materialize.css",
+    "/css/font-awesome.min.css",
+    "/js/addcard.js",
+    "/js/addcardset.js",
+    "/js/DataModule.js",
+    "/js/DomainModule.js",
+    "/js/gamePage.js",
+    "/js/index.js",
+    "/js/jquery-3.3.1.min.js",
+    "/js/localforage.min.js",
+    "/js/materialize.min.js",
+    "/js/materializeinit.js",
+    "/js/translate.js",
+    "/js/utilities.js"
+];
 //
 // self.addEventListener('install', function(event) {
 //     event.waitUntil(
@@ -53,3 +53,26 @@
 //     }());
 // });
 //
+
+
+importScripts('/cache-polyfill.js');
+
+self.addEventListener('install', function(e) {
+    e.waitUntil(
+        caches.open(cacheName).then(function(cache) {
+            return cache.addAll(cacheFiles);
+        })
+    );
+});
+
+
+self.addEventListener('fetch', function(event) {
+    console.log(event.request.url);
+    event.respondWith(
+        caches.match(event.request).then(function(response) {
+            console.log(response, "response");
+            console.log(event.request, "request");
+            return response || fetch(event.request);
+        })
+    );
+});

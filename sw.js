@@ -1,12 +1,13 @@
 var cacheName = "v1";
 //
 var cacheFiles = [
+    ".",
     "index.html",
     "addcard.html",
     "addcardset.html",
     "cardgame.html",
     "css/screen.css",
-    "css/materialize.css",
+    "css/materialize.min.css",
     "css/font-awesome.min.css",
     "js/addcard.js",
     "js/addcardset.js",
@@ -145,6 +146,7 @@ var cacheFiles = [
 self.addEventListener('install', function(e) {
     e.waitUntil(
         caches.open(cacheName).then(function(cache) {
+            console.log("Cashing files");
             return cache.addAll(cacheFiles);
         })
     );
@@ -152,7 +154,6 @@ self.addEventListener('install', function(e) {
 
 
 self.addEventListener('fetch', function(event) {
-    console.log(event.request.url);
     event.respondWith(
         caches.match(event.request).then(function(response) {
             console.log(response, "response");

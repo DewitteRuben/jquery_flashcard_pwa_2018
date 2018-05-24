@@ -6,7 +6,7 @@ var cacheFiles = [
     "addcardset.html",
     "cardgame.html",
     "css/screen.css",
-    "css/materialize.css",
+    "css/materialize.min.css",
     "css/font-awesome.min.css",
     "js/addcard.js",
     "js/addcardset.js",

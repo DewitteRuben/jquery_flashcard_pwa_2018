@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -6,17 +6,18 @@
 
     <title>Holocards</title>
     <link rel="stylesheet" href="css/screen.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="manifest" href="manifest.json"/>
-
 </head>
 <body>
+
 <div class="navbar-fixed">
+
     <nav class="blue lighten-2">
         <div class="nav-wrapper">
-            <a href="#/" class="brand-logo center">Cardset</a>
+            <a href="#/" class="brand-logo center">Card</a>
             <ul class="left">
                 <li><a href="javascript: history.back()">
                     <i class="material-icons">arrow_back</i>
@@ -34,50 +35,48 @@
 
         <ul id="more-options-dropdown" class="dropdown-content">
             <li><a href="index.html"
-                   class="blue-lighten-2-color"><i class="material-icons">home</i>Home</a></li>
+                   class="blue-lighten-2-color"><i class="material-icons ">home</i>Home</a></li>
             <li><a href="addcardset.html"
-                   class="blue-lighten-2-color"><i class="material-icons">create_new_folder</i>Cardset</a>
+                   class="blue-lighten-2-color"><i class="material-icons ">create_new_folder</i>Cardset</a>
             </li>
             <li><a href="addcard.html"
-                   class="blue-lighten-2-color"><i class="material-icons">add</i>Card</a></li>
+                   class="blue-lighten-2-color"><i class="material-icons ">add</i>Card</a></li>
         </ul>
     </nav>
 </div>
-
 <main>
     <div class="row">
-        <ul class="collection with-header collection-cardsets"></ul>
-        <div class="row">
-            <form class="form-add-cardset col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <label for="cardset_name">Cardset Name:</label>
-                        <input id="cardset_name" type="text" class="validate" required>
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="cardset_category">Cardset category:</label>
-                        <input id="cardset_category" type="text" class="validate" required>
-                    </div>
+        <div class="col s12 input-field">
+            <form class="form-save-settings">
+                <div>
+                    <label>
+                        <input type="checkbox" name="startCollapsed" class="filled-in"/>
+                        <span>Render cardsets collapsed</span>
+                    </label>
                 </div>
-                <button class="btn waves-effect waves-light btn-add-cardset blue lighten-2" type="submit"
-                        name="action">Add
-                    <i class="material-icons right">add</i>
+                <div>
+                    <label>
+                        <input type="checkbox" name="compactViewEnabled" class="filled-in"/>
+                        <span>Enable compact card view</span>
+                    </label>
+                </div>
+                <button class="btn waves-effect waves-light blue lighten-2" type="submit" name="action">Save
+                    <i class="material-icons right">save</i>
                 </button>
-
             </form>
         </div>
     </div>
 </main>
-
 <!--<script src="sw-register.js"></script>-->
 <script src="js/utilities.js"></script>
 <script src="js/localforage.min.js"></script>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script src="js/materializeinit.js"></script>
+<script src="js/translate.js"></script>
 <script src="js/DomainModule.js"></script>
 <script src="js/DataModule.js"></script>
 <script src="js/GuiModule.js"></script>
-<script src="js/addcardset.js"></script>
+<script src="js/settings.js"></script>
 </body>
 </html>

@@ -21,7 +21,7 @@ var cacheFiles = [
     "js/materialize.min.js",
     "js/materializeinit.js",
     "js/translate.js",
-    "js/utilities.js"
+    "js/utilities.js",
 ];
 
 self.addEventListener('install', function(e) {
@@ -56,10 +56,14 @@ self.addEventListener('fetch', function(event) {
             return response || fetch(event.request);
         }).catch(function() {
             console.log(event.request);
+            if (event.request.method === "POST") {
+                let url = new URL(event.request.url);
+                if (url.host === "translate.yandex.net") {
+                    
+                }
+            }
+
             return caches.match('/offline.html');
-            // However, in reality you'd have many different
-            // fallbacks, depending on URL & headers.
-            // Eg, a fallback silhouette image for avatars.
         })
     );
 });

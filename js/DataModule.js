@@ -9,6 +9,7 @@ let DataModule = function () {
         PICTURE: "cardPicture",
         GAME: "currentGame",
         CARD: "editCard",
+        SETTINGS:"settings"
     };
 
     const ERROR = {
@@ -20,8 +21,13 @@ let DataModule = function () {
         CARD_ADD_FAIL:"Failed to add card to cardset!",
         CARDSET_ADD_FAIL:"Failed to add cardset to the database!",
         DELETE_CARD_FROM_CARDSET_FAIL:"Failed to delete card from the cardset!",
-
+        STORE_SETTINGS:"Failed to store settings!",
+        LOAD_SETTINGS:"Failed to load settings from the database!"
     };
+
+    const MSG = {
+        SUCCESSFULLY_SAVED_SETTINGS:"Succesfully saved the settings!",
+    }
 
     var store = localforage.createInstance({
         name: STORAGE.STORE
@@ -213,6 +219,20 @@ let DataModule = function () {
         return store.getItem(KEYS.CARD);
     }
 
+    function getSettings() {
+        if (window.localStorage)
+            return JSON.parse(localStorage.getItem(KEYS.SETTINGS));
+        return null;
+    }
+
+    function saveSettings(settings) {
+        if (window.localStorage) {
+            localStorage.setItem(KEYS.SETTINGS, JSON.stringify(settings));
+            GuiModule.showToast("Successfully saved settings!", "");
+        } else
+            GuiModule.showToast("Settings are not supported by your browser!", "");
+    }
+
     return {
         postData: postData,
         pGetCardset: pGetCardset,
@@ -228,7 +248,10 @@ let DataModule = function () {
         pUpdateCardset: pUpdateCardset,
         pAddCardToCardset: pAddCardToCardset,
         pAddCardset: pAddCardset,
+        getSettings:getSettings,
+        saveSettings:saveSettings,
         pDeleteCardset: pDeleteCardset,
+        store:store,
         init:init
     }
 }();

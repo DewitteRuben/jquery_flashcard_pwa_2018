@@ -90,17 +90,30 @@ let DomainModule = function () {
         return this.cardset.cards[this.currentCardIndex];
     };
 
+    Card.prototype.renderCompact = function () {
+        return `<div id="test-0" class="card">
+                <a href="#" class="faint-black delete-card-collection-item"><i class="delete material-icons">delete</i></a>
+                ${this.image ? `<a href="#" data-image="${this.image}"class="faint-black image-card-collection-item"><i class="edit material-icons">photo</i></a>` : ""}
+                <div class="card-content">
+                    <p>Q: ${this.question}</p>
+                    <p class="answer">A: ${this.answer}</p>
+                    <p class="answers">${this.isMultipleChoice() ? `<p class="choices">${this.answerChoices.join(",")}</p>` : ""}</p>
+                    <p class="type">${cardTypeToPrettyName[this.type]}</p>
+                    <p class="typing">${this.typeAnswer ? "Type the answer" : ""}</p>
+                </div>   
+            </div>`;
+    };
+
     Card.prototype.render = function () {
         let HTMLString =
             `<div id="${this.id}" class="card">
                                <a href="#" class="faint-black delete-card-collection-item"><i class="delete material-icons">delete</i></a>
-                               <!--<a href="#" class="faint-black edit-card-collection-item"><i class="edit material-icons">edit</i></a>-->
                                <div class="card-content">
                                     <span class="card-title">${this.title}</span>`;
 
         if (this.image) {
-            HTMLString += `<div class="card-image">
-                                  <img src="${this.image}">
+            HTMLString += `<div>
+                                  <img class="responsive-img" src="${this.image}" alt="card-image" title="card-image"">
                            </div>`;
         }
 
@@ -148,7 +161,7 @@ let DomainModule = function () {
         let HTMLString = `
                 <section class="cardset" data-cardset="${this.name}" data-category="${this.category}">
                     <ul class="collapsible">
-                        <li class="active">
+                        <li ${settingsModule.startsCollapsed() ? "" : 'class="active"'}>
                     <div class="collapsible-header">
                     <i class="material-icons">folder</i>${this.name}
                     <a href="#/" class="faint-black home-hide-cardset"><i class="material-icons">arrow_drop_up</i></a>
@@ -164,7 +177,7 @@ let DomainModule = function () {
                 </div>
                 <div class="collapsible-body">`;
 
-        this.cards.forEach(card => HTMLString += card.render());
+        this.cards.forEach(card => HTMLString += settingsModule.isCompactViewEnabled() ? card.renderCompact() : card.render());
 
         if (this.cards.length === 0)
             HTMLString += `<span>No cards have been added to the cardset yet!</span>`;
@@ -176,25 +189,13 @@ let DomainModule = function () {
         return HTMLString;
     };
 
-    CardSet.prototype.isValid = function() {
+    CardSet.prototype.isValid = function () {
         return (!UtilModule.isEmpty(this.name) && !UtilModule.isEmpty(this.category));
     };
-
-    function Type(name) {
-        this.name = name;
-    }
-
-    function MultipleChoice(name, possibleAnswers) {
-        Type.call(this, name);
-        this.possibleAnswers = possibleAnswers;
-    }
-
-    __extends(MultipleChoice, Type);
 
     return {
         Game: Game,
         Card: Card,
-        Type: Type,
         CardSet: CardSet
     }
 

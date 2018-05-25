@@ -53,9 +53,9 @@ self.addEventListener('fetch', function(event) {
         caches.open(cacheName).then(function(cache) {
             return cache.match(event.request).then(function(response) {
                 var fetchPromise = fetch(event.request).then(function(networkResponse) {
-                    console.log("Fetching from internet");
+                    // console.log("Fetching from internet");
                     cache.put(event.request, networkResponse.clone());
-                    console.log("Cached the response", networkResponse.clone());
+                    // console.log("Cached the response", networkResponse.clone());
                     return networkResponse;
                 }).catch(function() {
                     console.log("Failed to update cache, network unavailable");

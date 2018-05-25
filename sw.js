@@ -58,6 +58,8 @@ self.addEventListener('fetch', function(event) {
                 }).catch(function() {
                     console.log("Failed to update cache, network unavailable");
                 });
+                console.log("cache response ", response);
+                console.log("internet response", fetchPromise);
                 return response || fetchPromise;
             }).catch(function() {
                 console.log("Failed to match cache and to update from the network");

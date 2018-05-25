@@ -22,7 +22,7 @@ let addCardModule = (function () {
         $(".btn-translate-input").on("click", translateInput);
         $("#card-question").on("input", handleTranslateButton);
         $("#input-card-picture").on("change", onImageFileSelect);
-        $(".btn-preview-card").on("click", previewCard);
+        $(".btn-preview-card").on("click", evOpenPreviewCardModal);
         $(".translate-decline").on("click", declineTranslateOnModalClose);
         $(".modal-close").on("click", onTranslateModalClose);
     }
@@ -205,11 +205,18 @@ let addCardModule = (function () {
         })
     }
 
-    function previewCard(e) {
+    function previewCard(card) {
+        let id = "previewModal";
+        let modalContent = `<h4>Preview</h4>
+                        ${card.render()}`;
+        GuiModule.generateModal("previewModal", modalContent, "", "Close");
+    }
+
+    function evOpenPreviewCardModal(e) {
         e.preventDefault();
         getCardFromInput().then(function (card) {
             if (card.isValid()) {
-                GuiModule.previewCard(card);
+                previewCard(card);
             } else {
                 GuiModule.showToast("All fields must be filled in before a preview can be shown!", "");
             }

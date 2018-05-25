@@ -137,13 +137,24 @@ div.collapsible-items i {
     margin-top: 10px;
 }
 
-/*.center {*/
-/*!*margin: 0px;*!*/
-/*!*padding: 0px;*!*/
-/*!*float: left;*!*/
-/*!*width: 100%;*!*/
-/*!*position: absolute;*!*/
-/*!*top: 50%;*!*/
-/*!*transform: translateY(-50%) translateX(-50%);*!*/
-/*!*left: 50%;*!*/
-/*}*/
+.preloader-background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.relative {
+    position: relative;
+}
+
+.add-card-cardset {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}

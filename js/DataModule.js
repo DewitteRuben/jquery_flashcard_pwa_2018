@@ -9,7 +9,8 @@ let DataModule = function () {
         PICTURE: "cardPicture",
         GAME: "currentGame",
         CARD: "editCard",
-        SETTINGS:"settings"
+        SETTINGS:"settings",
+        CURRENT_CARDSET:"currentCardset"
     };
 
     const ERROR = {
@@ -233,6 +234,10 @@ let DataModule = function () {
             GuiModule.showToast("Settings are not supported by your browser!", "");
     }
 
+    function setCurrentEditedCardset(cardsetName) {
+        sessionStorage.setItem(KEYS.CURRENT_CARDSET, cardsetName);
+    }
+
     return {
         postData: postData,
         pGetCardset: pGetCardset,
@@ -250,6 +255,7 @@ let DataModule = function () {
         pAddCardset: pAddCardset,
         getSettings:getSettings,
         saveSettings:saveSettings,
+        setCurrentEditedCardset:setCurrentEditedCardset,
         pDeleteCardset: pDeleteCardset,
         store:store,
         init:init

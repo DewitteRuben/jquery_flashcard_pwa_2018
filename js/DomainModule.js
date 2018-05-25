@@ -180,7 +180,7 @@ let DomainModule = function () {
         this.cards.forEach(card => HTMLString += settingsModule.isCompactViewEnabled() ? card.renderCompact() : card.render());
 
         if (this.cards.length === 0)
-            HTMLString += `<span>No cards have been added to the cardset yet!</span>`;
+            HTMLString += `<span>No cards have been added yet, tap the + button to add a card!</span>`;
 
         HTMLString += `</div>
                        </li>

@@ -7,6 +7,9 @@ let indexModule = (function () {
         LI_ALL_TAB: `<li data-category="ALL" class="tab"><a href="#tab-all">ALL</a></li>`,
         UL_EMPTY_CARDSET: `<ul class="collection with-header collection-cardsets">
                 <li class="collection-item">No cardsets have been created yet!</li>
+                <li class="collection-item center-align blue"><a style="display:block;"class="white-text" href="addcardset.html">
+                <i class="material-icons">add</i>
+                    </a></li>
                 </ul>`,
     };
 
@@ -71,15 +74,12 @@ let indexModule = (function () {
     }
 
 
-    function ensureEmptyCardset(HTMLString) {
-        if (HTMLString.length === 0) HTMLString += HTML.UL_EMPTY_CARDSET;
-        return HTMLString;
-    }
-
     function populateCardsetsList($list) {
         return function (HTMLString) {
             if (!UtilModule.isEmpty(HTMLString))
                 $list.html(HTMLString);
+            else
+                $(".cards").html(HTML.UL_EMPTY_CARDSET);
         }
     }
 
@@ -104,12 +104,27 @@ let indexModule = (function () {
         }
     }
 
+
+    function showLoadingCircle(cardsetMap) {
+        $(".card-view").addClass("hidden");
+        $("main .row").append(GuiModule.loadingSpinner());
+        return cardsetMap;
+    }
+
+    function fadeOutLoadingCircle() {
+        $(".preloader-background").fadeOut("slow", function () {
+            $(".card-view").removeClass("hidden");
+        });
+    }
+
     function initCardsetsList($list, category) {
         DataModule.pGetAllCardsets()
+            .then(showLoadingCircle)
             .then(cardsetMap2CardsetArrByCategory(category))
             .then(arrByCategory2HTMLString)
             .then(populateCardsetsList($list))
             .then(bindCardsetEventHandlers)
+            .then(fadeOutLoadingCircle)
             .catch(err => console.log(err));
     }
 
@@ -117,7 +132,7 @@ let indexModule = (function () {
         e.preventDefault();
         e.stopPropagation();
         let cardsetName = $(this).parents("section").data("cardset");
-        sessionStorage.setItem("currentCardset", cardsetName);
+        DataModule.setCurrentEditedCardset(cardsetName);
         window.location.href = URL.ADD_CARD_PAGE;
     }
 
@@ -220,7 +235,8 @@ let indexModule = (function () {
         let modalContent = `<img class="responsive-img" src="${$(this).data("image")}" 
                                  alt="card-image" 
                                  title="card-image"/>`;
-        GuiModule.generateModal("imageModal", modalContent, "", "Close", function () {});
+        GuiModule.generateModal("imageModal", modalContent, "", "Close", function () {
+        });
     }
 
     return {

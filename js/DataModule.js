@@ -29,9 +29,10 @@ let DataModule = function () {
 
     function init() {
         store.getItem(STORAGE.CARDSETS).then(function(cardsets) {
-            if (!cardsets)
+            if (!cardsets) {
                 console.log("Cardsets storage doesn't exist, creating new storage space...");
                 store.setItem(STORAGE.CARDSETS, new Map());
+            }
         }).catch(err => Promise.reject(err));
     }
 

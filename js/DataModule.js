@@ -53,10 +53,8 @@ let DataModule = function () {
 
     function pGetAllCardsets() {
         return store.getItem(STORAGE.CARDSETS).then(function (result) {
-            GuiModule.showToast("trying new vers", "");
             if (!result) return new Map();
-            let cardsets = Array.from(result.values());
-            cardsets.forEach(rebuildCardSetMap(result));
+            result.forEach(rebuildCardSetMap(result));
             return result;
         }).catch(function (err) {
             return Promise.reject(err);

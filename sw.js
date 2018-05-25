@@ -6,6 +6,7 @@ var cacheFiles = [
     "addcard.html",
     "addcardset.html",
     "cardgame.html",
+    "settings.html",
     "css/screen.css",
     "css/materialize.min.css",
     "css/font-awesome.min.css",
@@ -47,23 +48,21 @@ self.addEventListener('activate', function(event) {
     );
 });
 
-
 self.addEventListener('fetch', function(event) {
     event.respondWith(
-        // Try the cache
-        caches.match(event.request).then(function(response) {
-            // Fall back to network
-            return response || fetch(event.request);
-        }).catch(function() {
-            console.log(event.request);
-            if (event.request.method === "POST") {
-                let url = new URL(event.request.url);
-                if (url.host === "translate.yandex.net") {
-                    
-                }
-            }
-
-            return caches.match('/offline.html');
+        caches.open(cacheName).then(function(cache) {
+            return cache.match(event.request).then(function(response) {
+                var fetchPromise = fetch(event.request).then(function(networkResponse) {
+                    cache.put(event.request, networkResponse.clone());
+                    return networkResponse;
+                }).catch(function() {
+                    console.log("Failed to update cache, network unavailable");
+                });
+                return response || fetchPromise;
+            }).catch(function() {
+                console.log("Failed to match cache and to update from the network");
+            })
         })
     );
 });
+

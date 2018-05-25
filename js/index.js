@@ -6,15 +6,15 @@ let indexModule = (function () {
     let HTML = {
         LI_ALL_TAB: `<li data-category="ALL" class="tab"><a href="#tab-all">ALL</a></li>`,
         UL_EMPTY_CARDSET: `<ul class="collection with-header collection-cardsets">
-                <li class="collection-item">No cardsets have been created yet!</li>
-                <li class="center-align sick-blue"><a style="display:block; padding-top: 5px;"class="white-text" href="addcardset.html">
-                    <i class="material-icons">add</i>
+                <li class="center collection-item">No cardsets have been created yet, tap the <i class="material-icons">create_new_folder</i> button to add a cardset!<li>
+                <li class="center sick-blue"><a style="display:block; padding-top: 5px;"class="white-text" href="addcardset.html">
+                    <i class="material-icons">create_new_folder</i>
                         </a></li>
                 </ul>`,
         ADD_CARDSET_BUTTON: `<section>
                 <ul class="collapsible">
                     <li class="collection-item center-align sick-blue"><a style="display:block; padding-top: 5px;"class="white-text" href="addcardset.html">
-                    <i class="material-icons">add</i>
+                    <i class="material-icons">create_new_folder</i>
                         </a></li>
                 </ul>
                 </section>`

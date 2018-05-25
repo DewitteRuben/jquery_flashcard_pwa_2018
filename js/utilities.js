@@ -1,3 +1,5 @@
+"use strict";
+
 let UtilModule = function () {
     function isEmpty(value) {
         if (value === null || value === undefined) {

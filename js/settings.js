@@ -1,3 +1,5 @@
+"use strict";
+
 let settingsModule = (function () {
 
     let STORAGE_KEYS = {

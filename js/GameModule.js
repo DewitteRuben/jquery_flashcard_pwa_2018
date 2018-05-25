@@ -1,30 +1,32 @@
-let GameModule = (function () {
-    let _this = this;
-    this.game = null;
-    let timer = new Timer();
+"use strict";
 
-    function initGame(game) {
-        _this.game = game;
-        _this.game.reset();
+let GameModule = (function () {
+    let timer = new Timer();
+    let gamehandler = null;
+
+    function GameHandler(game) {
+        this.game = game;
+        this.game.reset();
+        gamehandler = this;
     }
 
     function getGame() {
-        return _this.game;
-    }
+        return gamehandler.game;
+    };
 
     function updateGameCard(e) {
         if (e.data.prev) {
-            _this.game.prevCard();
+            gamehandler.game.prevCard();
         } else {
-            _this.game.nextCard();
+            gamehandler.game.nextCard();
         }
-        _this.game.isFront = true;
-        GuiModule.updateGameCardLayout(_this.game);
+        gamehandler.game.isFront = true;
+        GuiModule.updateGameCardLayout(gamehandler.game);
     }
 
     function flipGameCard(e) {
-        _this.game.isFront = !_this.game.isFront;
-        GuiModule.updateGameCardLayout(_this.game);
+        gamehandler.game.isFront = !gamehandler.game.isFront;
+        GuiModule.updateGameCardLayout(gamehandler.game);
     }
 
     function initTimer() {
@@ -43,7 +45,7 @@ let GameModule = (function () {
     }
 
     function isGameFinishedOnNextAnswer() {
-        return _this.game.getAnsweredCards().length + 1 === _this.game.cardset.cards.length;
+        return gamehandler.game.getAnsweredCards().length + 1 === gamehandler.game.cardset.cards.length;
     }
 
     function showStatsModal() {
@@ -52,19 +54,19 @@ let GameModule = (function () {
     }
 
     function getScore() {
-        return (_this.game.getCorrectCards().length / _this.game.getAnsweredCards().length).toFixed(3) * 100;
+        return (gamehandler.game.getCorrectCards().length / gamehandler.game.getAnsweredCards().length).toFixed(3) * 100;
     }
 
     function setScore() {
-        let score = _this.game.cardset.bestScore;
+        let score = gamehandler.game.cardset.bestScore;
         if (!score || getScore() > score) {
-            _this.game.cardset.bestScore = getScore();
+            gamehandler.game.cardset.bestScore = getScore();
         }
     }
 
     function finishGame() {
-        _this.game.isFinished = true;
-        _this.game.timeFinished = getTime();
+        gamehandler.game.isFinished = true;
+        gamehandler.game.timeFinished = getTime();
         setScore();
     }
 
@@ -77,30 +79,30 @@ let GameModule = (function () {
         let answer;
         switch (e.data.type) {
             case "SA":
-                answer = e.data.correct ? _this.game.getCurrentCard().answer : "";
-                if (_this.game.getCurrentCard().typeAnswer)
-                        answer = $("#game-type-answer").val();
+                answer = e.data.correct ? gamehandler.game.getCurrentCard().answer : "";
+                if (gamehandler.game.getCurrentCard().typeAnswer)
+                    answer = $("#game-type-answer").val();
                 break;
             case "TF":
                 answer = e.data.answer;
                 break;
             case "MC":
                 answer =
-                    $.trim(_this.game.getCurrentCard()
+                    $.trim(gamehandler.game.getCurrentCard()
                         .answerChoices[$("input[name='radioAnswer']:checked").val()]);
                 break;
         }
 
-        _this.game.answer(answer);
-        GuiModule.updateGameCardLayout(_this.game);
+        gamehandler.game.answer(answer);
+        GuiModule.updateGameCardLayout(gamehandler.game);
     }
 
     return {
-        initGame: initGame,
+        initGame: GameHandler,
         updateGameCard: updateGameCard,
         flipGameCard: flipGameCard,
         getGame: getGame,
         answer: answer,
-        initTimer:initTimer,
+        initTimer: initTimer,
     }
 })();

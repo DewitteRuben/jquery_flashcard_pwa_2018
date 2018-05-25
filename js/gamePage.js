@@ -1,3 +1,5 @@
+"use strict";
+
 let gamePageModule = (function() {
 
     function init() {

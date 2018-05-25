@@ -1,3 +1,5 @@
+"use strict";
+
 let indexModule = (function () {
     let CATEGORY = {
         ALL: "ALL"

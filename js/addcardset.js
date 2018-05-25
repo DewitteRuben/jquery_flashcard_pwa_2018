@@ -1,21 +1,4 @@
-// // function deleteCardSet(e) {
-// //     let cardsetName = $(this).parent().data("name").toString();
-// //     let content = `<p>Are you sure you wish to delete the cardset ${cardsetName}?</p>`;
-// //     GuiModule.generateModal("deleteCardsetModal", content, "Decline", "Confirm", deleteCardsetModalHandler(cardsetName));
-// // }
-// //
-// // function deleteCardsetModalHandler(cardsetName) {
-// //     return function () {
-// //         DataModule.pDeleteCardset(cardsetName).then((result) => {
-// //             populateCardSetULCollection();
-// //         }).catch(err => GuiModule.showToast(err, ""));
-// //     }
-// // }
-//
-// function populateCardSetULCollection() {
-//     GuiModule.populateCollectionWithCardsets($(".collection-cardsets"));
-// }
-//
+"use strict";
 
 let addCardsetModule = (function () {
 

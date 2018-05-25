@@ -11,17 +11,29 @@ let DataModule = function () {
         CARD: "editCard",
     };
 
+    const ERROR = {
+        INVALID_NAME_CATEGORY: "Please enter a valid name and category!",
+        INVALID_CARDSET: "The cardset name or category is not valid!",
+        INVALID_CARD_DETAILS:"The card details are not valid!",
+        CARDSET_ALREADY_EXISTS: "A cardset with the same name already exists!",
+        CARD_DB_FAIL:"Failed to get card from the database!",
+        CARD_ADD_FAIL:"Failed to add card to cardset!",
+        CARDSET_ADD_FAIL:"Failed to add cardset to the database!",
+        DELETE_CARD_FROM_CARDSET_FAIL:"Failed to delete card from the cardset!",
+
+    };
+
     var store = localforage.createInstance({
         name: STORAGE.STORE
     });
 
-    (function initCardSets() {
-        store.getItem(STORAGE.CARDSETS, function (err, value) {
-            if (!err && value === null) {
+    function init() {
+        store.getItem(STORAGE.CARDSETS).then(function(cardsets) {
+            if (!cardsets)
+                console.log("Cardsets storage doesn't exist, creating new storage space...");
                 store.setItem(STORAGE.CARDSETS, new Map());
-            }
-        });
-    }());
+        }).catch(err => Promise.reject(err));
+    }
 
     function rebuildCardSetMap(cardMap) {
         return function (cardSet, key) {
@@ -31,20 +43,9 @@ let DataModule = function () {
         }
     }
 
-    function getAllCardSets(cb) {
-        store.getItem(STORAGE.CARDSETS, function (err, cardMap) {
-            if (err === null) {
-                cardMap.forEach(rebuildCardSetMap(cardMap));
-                cb(cardMap, null);
-            } else {
-                cb(err, true);
-            }
-        });
-    }
-
-
     function pGetAllCardsets() {
         return store.getItem(STORAGE.CARDSETS).then(function (result) {
+            if (!result) return new Map();
             result.forEach(rebuildCardSetMap(result));
             return result;
         }).catch(function (err) {
@@ -54,7 +55,7 @@ let DataModule = function () {
 
     function updateNameAndCategory(oldName, newCardset) {
         return function (cardMap) {
-            if (!newCardset.isValid()) return Promise.reject("Please enter a valid name and category!");
+            if (!newCardset.isValid()) return Promise.reject(ERROR.INVALID_NAME_CATEGORY);
             let tempObj = cardMap.get(oldName);
             cardMap.delete(oldName);
             cardMap.set(newCardset.name, tempObj);
@@ -89,7 +90,7 @@ let DataModule = function () {
             store.setItem(STORAGE.CARDSETS, map);
             return Promise.resolve(`Successfully added the ${cardset.name} cardset!`);
         }).catch(function (err) {
-            return Promise.reject("Failed to add cardset to the database!");
+            return Promise.reject(ERROR.CARDSET_ADD_FAIL);
         })
     }
 
@@ -101,11 +102,11 @@ let DataModule = function () {
     function pAddCardset(newCardset) {
         return pGetAllCardsets().then(function (cardsetMap) {
             if (!newCardset.isValid())
-                return Promise.reject("The cardset name or category is not valid!");
+                return Promise.reject(ERROR.INVALID_CARDSET);
             let cardsets = cardsetMap.values();
             for (let cardset of cardsets) {
                 if (isCardsetEqual(cardset, newCardset))
-                    return Promise.reject("A cardset with the same name already exists!");
+                    return Promise.reject(ERROR.CARDSET_ALREADY_EXISTS);
             }
             return newCardset;
         }).then(uniqueCardset => pAddUpdateCardset(uniqueCardset)).catch(err => Promise.reject(err));
@@ -119,8 +120,7 @@ let DataModule = function () {
         }).then(function (cardset) {
             return pAddUpdateCardset(cardset);
         }).catch(function (err) {
-            return new Promise.reject("Failed to delete card from cardset!");
-            // return new Promise.reject(err);
+            return Promise.reject(ERROR.DELETE_CARD_FROM_CARDSET_FAIL);
         });
     }
 
@@ -135,30 +135,28 @@ let DataModule = function () {
     function pAddCardToCardset(card, cardsetName) {
         return pGetCardset(cardsetName).then(function (cardset) {
             if (!card.isValid())
-                return Promise.reject("The details entered were not valid!");
+                return Promise.reject(ERROR.INVALID_CARD_DETAILS);
             card.id = cardset.name + "-" + cardset.cards.length;
             cardset.addCard(card);
             return cardset;
-        }).then(function(cardset) {
+        }).then(function (cardset) {
             return pAddUpdateCardset(cardset);
-        }).catch((err) => Promise.reject("Failed to add card to cardset!"))
+        }).catch((err) => Promise.reject(ERROR.CARD_ADD_FAIL));
     }
 
     function pGetCardset(key) {
         return pGetAllCardsets()
             .then((result) => result.get(key) ? result.get(key) : null)
-            .catch((err) => Promise.reject("Failed to get card from the database!"));
+            .catch((err) => Promise.reject(ERROR.CARD_DB_FAIL));
     }
 
     function postData(url) {
-        // Default options are marked with *
         return fetch(url, {
             headers: {
                 'content-type': 'application/x-www-form-urlencoded'
             },
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        })
-            .then(response => response.json()) // parses response to JSON
+            method: 'POST',
+        }).then(response => response.json());
     }
 
     function savePicture(base64url) {
@@ -216,7 +214,7 @@ let DataModule = function () {
 
     return {
         postData: postData,
-        pGetCardset:pGetCardset,
+        pGetCardset: pGetCardset,
         pFileReader: pFileReader,
         savePicture: savePicture,
         clearPictureData: clearPictureData,
@@ -227,8 +225,13 @@ let DataModule = function () {
         pGetAllCardsets: pGetAllCardsets,
         getCurrentCard: getCurrentCard,
         pUpdateCardset: pUpdateCardset,
-        pAddCardToCardset:pAddCardToCardset,
-        pAddCardset:pAddCardset,
+        pAddCardToCardset: pAddCardToCardset,
+        pAddCardset: pAddCardset,
         pDeleteCardset: pDeleteCardset,
+        init:init
     }
 }();
+
+$(document).ready(function() {
+    DataModule.init();
+});

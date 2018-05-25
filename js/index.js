@@ -77,7 +77,8 @@ let indexModule = (function () {
 
     function populateCardsetsList($list) {
         return function (HTMLString) {
-            $list.html(HTMLString);
+            if (!UtilModule.isEmpty(HTMLString))
+                $list.html(HTMLString);
         }
     }
 
@@ -106,7 +107,7 @@ let indexModule = (function () {
         DataModule.pGetAllCardsets()
             .then(cardsetMap2CardsetArrByCategory(category))
             .then(arrByCategory2HTMLString)
-            .then(ensureEmptyCardset)
+            // .then(ensureEmptyCardset)
             .then(populateCardsetsList($list))
             .then(bindCardsetEventHandlers)
             .catch(err => console.log(err));

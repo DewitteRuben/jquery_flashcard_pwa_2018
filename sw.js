@@ -154,12 +154,48 @@ self.addEventListener('install', function(e) {
 });
 
 
-self.addEventListener('fetch', function(event) {
-    event.respondWith(
-        caches.match(event.request).then(function(response) {
-            console.log(response, "response");
-            console.log(event.request, "request");
-            return response || fetch(event.request);
+self.addEventListener('activate', function(event) {
+    event.waitUntil(
+        caches.keys().then(function(cacheNames) {
+            return Promise.all(
+                cacheNames.filter(function(cacheName) {
+                }).map(function(cacheName) {
+                    return caches.delete(cacheName);
+                })
+            );
         })
     );
 });
+
+
+self.addEventListener('fetch', function(event) {
+    event.respondWith(
+        // Try the cache
+        caches.match(event.request).then(function(response) {
+            if (response) {
+                return response;
+            }
+            return fetch(event.request).then(function(response) {
+                if (response.status === 404) {
+                    return caches.match('pages/404.html');
+                }
+                return response
+            });
+        }).catch(function() {
+            // If both fail, show a generic fallback:
+            return caches.match('/offline.html');
+        })
+    );
+});
+
+
+
+// self.addEventListener('fetch', function(event) {
+//     event.respondWith(
+//         caches.match(event.request).then(function(response) {
+//             console.log(response, "response");
+//             console.log(event.request, "request");
+//             return response || fetch(event.request);
+//         })
+//     );
+// });

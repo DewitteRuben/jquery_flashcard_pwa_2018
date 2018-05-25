@@ -4,7 +4,8 @@ let GuiModule = function () {
         CHOOSE_CARDSET: "Choose a cardset",
         NO_CARDSETS: "No cardsets have been created yet!",
         FRONT: "FRONT",
-        BACK: "BACK"
+        BACK: "BACK",
+        OFFLINE:"Currently working offline!"
     };
 
 
@@ -39,25 +40,6 @@ let GuiModule = function () {
         $("body").append($(contentString));
     }
 
-    function renameCardsetInMap(oldName, newName, newCategory) {
-        return function (cardMap) {
-            let tempObj = cardMap.get(oldName);
-            cardMap.delete(oldName);
-            cardMap.set(newName, tempObj);
-            cardMap.forEach(function (cardset) {
-                if (cardset.name === oldName) {
-                    cardset.name = newName;
-                    cardset.category = newCategory;
-                    cardset.cards.forEach(function (card) {
-                        card.id = newName + "-" + card.id.split("-")[1];
-                    })
-                }
-            });
-            return cardMap;
-        };
-    }
-
-
     function generateModal(id, content, btn1, btn2, btn2ClickHandler) {
         GuiModule.showModal(id, content, btn1, btn2);
         $(`#modal-${id}-${btn2}`).on("click", btn2ClickHandler);
@@ -77,14 +59,6 @@ let GuiModule = function () {
         return HTMLString;
     }
 
-
-    function headerPlayCardset(e) {
-        e.stopPropagation();
-        let cardSetName = $(this).parents("section").data("cardset");
-        DataModule.startCurrentGame(cardSetName).then(function (result) {
-            window.location.href = "cardgame.html";
-        }).catch(err => GuiModule.showToast(err, ""));
-    }
 
     function populateRadioAnswers(card) {
         $(".radioAnswerButtons").html(answer2radiobtns(card));
@@ -151,7 +125,7 @@ let GuiModule = function () {
     }
 
     function cardImage2ImageTag(card) {
-        return $(`<img class="card-play-image" src="${card.image ? card.image : ""}" alt="${card.title}-image">`);
+        return $(`<img class="card-play-image responsive-img" src="${card.image ? card.image : ""}" alt="${card.title}-image">`);
     }
 
     function toggleCardImage(game) {
@@ -174,16 +148,20 @@ let GuiModule = function () {
         toggleGameUIControls(game.hasBeenAnswered(curCard));
         toggleCardImage(game);
         switchGameUIControls(curCard);
-
-
-        // TODO display for example with color that card was answered correctly
     }
 
     /*-------------------------------------------------------------------------------------------/
      */
-    
+
     function removeModalOnClose() {
         $(this)[0].$el.remove();
+    }
+
+    function showOfflineMessage() {
+        if (!sessionStorage.getItem("isOffline")) {
+            showToast(MESSAGES.OFFLINE, "");
+            sessionStorage.setItem("isOffline", "true");
+        }
     }
 
     function showToast(text, classOpt) {
@@ -197,7 +175,7 @@ let GuiModule = function () {
         showToast: showToast,
         populateRadioAnswers: populateRadioAnswers,
         generateModal: generateModal,
-        loadingSpinner:loadingSpinner,
+        loadingSpinner: loadingSpinner,
     }
 
 }();

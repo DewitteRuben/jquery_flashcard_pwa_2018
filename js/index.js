@@ -7,10 +7,17 @@ let indexModule = (function () {
         LI_ALL_TAB: `<li data-category="ALL" class="tab"><a href="#tab-all">ALL</a></li>`,
         UL_EMPTY_CARDSET: `<ul class="collection with-header collection-cardsets">
                 <li class="collection-item">No cardsets have been created yet!</li>
-                <li class="collection-item center-align blue"><a style="display:block;"class="white-text" href="addcardset.html">
-                <i class="material-icons">add</i>
-                    </a></li>
+                <li class="center-align sick-blue"><a style="display:block; padding-top: 5px;"class="white-text" href="addcardset.html">
+                    <i class="material-icons">add</i>
+                        </a></li>
                 </ul>`,
+        ADD_CARDSET_BUTTON: `<section>
+                <ul class="collapsible">
+                    <li class="collection-item center-align sick-blue"><a style="display:block; padding-top: 5px;"class="white-text" href="addcardset.html">
+                    <i class="material-icons">add</i>
+                        </a></li>
+                </ul>
+                </section>`
     };
 
     let URL = {
@@ -77,6 +84,7 @@ let indexModule = (function () {
     function populateCardsetsList($list) {
         return function (HTMLString) {
             if (!UtilModule.isEmpty(HTMLString)) {
+                HTMLString += HTML.ADD_CARDSET_BUTTON;
                 $list.html(HTMLString);
             } else {
                 $(".cards").html(HTML.UL_EMPTY_CARDSET);
@@ -251,4 +259,9 @@ let indexModule = (function () {
 $(document).ready(function () {
     indexModule.init();
     $('.fixed-action-btn').floatingActionButton();
+});
+
+$(window).on("load", function() {
+    // if (!navigator.onLine)
+
 });

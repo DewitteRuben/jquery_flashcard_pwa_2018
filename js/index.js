@@ -76,10 +76,12 @@ let indexModule = (function () {
 
     function populateCardsetsList($list) {
         return function (HTMLString) {
-            if (!UtilModule.isEmpty(HTMLString))
+            if (!UtilModule.isEmpty(HTMLString)) {
                 $list.html(HTMLString);
-            else
+            } else {
                 $(".cards").html(HTML.UL_EMPTY_CARDSET);
+                $(".cards-filtered").html("");
+            }
         }
     }
 
@@ -114,6 +116,7 @@ let indexModule = (function () {
     function fadeOutLoadingCircle() {
         $(".preloader-background").fadeOut("slow", function () {
             $(".card-view").removeClass("hidden");
+            $(this).remove();
         });
     }
 

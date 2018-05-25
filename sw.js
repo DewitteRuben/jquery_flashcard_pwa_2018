@@ -55,7 +55,7 @@ self.addEventListener('fetch', function(event) {
             // Fall back to network
             return response || fetch(event.request);
         }).catch(function() {
-            // If both fail, show a generic fallback:
+            console.log(event.request);
             return caches.match('/offline.html');
             // However, in reality you'd have many different
             // fallbacks, depending on URL & headers.

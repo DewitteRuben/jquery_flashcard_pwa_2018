@@ -6,24 +6,25 @@
 
     <title>Holocards</title>
     <link rel="stylesheet" href="css/screen.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="manifest" href="manifest.json"/>
 
 </head>
 <body>
 <div class="navbar-fixed">
-    <nav class="sick-blue">
+    <nav class="nav-extended sick-blue">
         <div class="nav-wrapper">
-            <a href="#/" class="brand-logo center">Cardset</a>
+            <a href="#/" class="brand-logo">Holocards</a>
             <ul class="left">
-                <li><a href="javascript: history.back()">
-                    <i class="material-icons">arrow_back</i>
-                </a></li>
+                <li>
+                    <a href="index.html">
+                        <i class="material-icons">home</i>
+                    </a>
+                </li>
             </ul>
             <ul class="right">
-                <li><a class="link-check-form" href="#/"><i class="material-icons">check</i></a></li>
                 <li>
                     <a href="#/" class="dropdown-trigger" data-target="more-options-dropdown">
                         <i class="material-icons">more_vert</i>
@@ -31,7 +32,6 @@
                 </li>
             </ul>
         </div>
-
         <ul id="more-options-dropdown" class="dropdown-content">
             <li><a href="index.html"
                    class="blue-lighten-2-color"><i class="material-icons ">home</i>Home</a></li>
@@ -45,43 +45,34 @@
             <li><a href="settings.html"
                    class="blue-lighten-2-color"><i class="material-icons ">settings</i>Settings</a></li>
         </ul>
+
     </nav>
 </div>
-
 <main>
-    <div class="row">
-        <ul class="collection with-header collection-cardsets"></ul>
-        <div class="row">
-            <form class="form-add-cardset col s12" autocomplete="off">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <label for="cardset_name">Cardset Name:</label>
-                        <input id="cardset_name" type="text" class="validate" required>
-                    </div>
-                    <div class="input-field col s12">
-                        <label for="cardset_category">Cardset category:</label>
-                        <input id="cardset_category" type="text" class="validate" required>
-                    </div>
-                </div>
-                <button class="btn waves-effect waves-light btn-add-cardset blue lighten-2" type="submit"
-                        name="action">Add
-                    <i class="material-icons right">add</i>
-                </button>
+    <table class="centered">
+        <thead>
+        <tr>
+            <th>Game</th>
+            <th>Time</th>
+            <th>Date</th>
+            <th>Card</th>
+            <th>Your Guess</th>
+            <th>Actual answer</th>
+        </tr>
+        </thead>
+        <tbody>
 
-            </form>
-        </div>
-    </div>
+        </tbody>
+    </table>
 </main>
-
-<script src="js/utilities.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
 <script src="sw-register.js"></script>
 <script src="js/localforage.min.js"></script>
-<script src="js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
+<script src="js/materialize.min.js"></script>
 <script src="js/materializeinit.js"></script>
-<script src="js/DomainModule.js"></script>
 <script src="js/DataModule.js"></script>
+<script src="js/DomainModule.js"></script>
 <script src="js/GuiModule.js"></script>
-<script src="js/addcardset.js"></script>
+<script src="js/gameoverview.js"></script>
 </body>
 </html>

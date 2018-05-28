@@ -1,7 +1,7 @@
 let addCardTranslateModule = (function () {
 
     const MESSAGES = {
-        OFFLINE:"Offline detected, translation features have been disabled!",
+        OFFLINE:"Offline mode detected, translation features have been disabled!",
     };
 
     function displayOfflineMessage() {

@@ -30,7 +30,7 @@ let GuiModule = function () {
     </div>`);
     }
 
-    function showModal(id, content, btn1, btn2) {
+    function addModal(id, content, btn1, btn2) {
         let contentString = `<div id="${id}" class="modal">
                     <div class="modal-content">
                         ${content}
@@ -43,9 +43,10 @@ let GuiModule = function () {
         $("body").append($(contentString));
     }
 
-    function generateModal(id, content, btn1, btn2, btn2ClickHandler) {
-        GuiModule.showModal(id, content, btn1, btn2);
+    function generateModal(id, content, btn1, btn2, btn2ClickHandler, btn1ClickHandler) {
+        addModal(id, content, btn1, btn2);
         $(`#modal-${id}-${btn2}`).on("click", btn2ClickHandler);
+        $(`#modal-${id}-${btn1}`).on("click", btn1ClickHandler);
         let $modal = $(`#${id}`);
         M.Modal.init($modal[0], {"onCloseEnd": removeModalOnClose, "preventScrolling": true});
         $modal.modal("open");
@@ -164,7 +165,7 @@ let GuiModule = function () {
 
     return {
         updateGameCardLayout: updateGameCardLayout,
-        showModal: showModal,
+        addModal: addModal,
         object2options: object2options,
         showToast: showToast,
         generateModal: generateModal,

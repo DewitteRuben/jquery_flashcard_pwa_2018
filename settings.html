@@ -40,35 +40,52 @@
             </li>
             <li><a href="addcard.html"
                    class="blue-lighten-2-color"><i class="material-icons ">add</i>Card</a></li>
+            <li><a href="gameoverview.html"
+                   class="blue-lighten-2-color"><i class="material-icons ">format_list_numbered</i>Highscores</a></li>
+            <li><a href="settings.html"
+                   class="blue-lighten-2-color"><i class="material-icons ">settings</i>Settings</a></li>
         </ul>
     </nav>
 </div>
 <main>
-   <div class="container">
-       <div class="row">
-           <div class="col s12 input-field">
-               <form class="form-save-settings">
-                   <div>
-                       <label>
-                           <input type="checkbox" name="startCollapsed" class="filled-in"/>
-                           <span>Render accordion elements closed</span>
-                       </label>
-                   </div>
-                   <div>
-                       <label>
-                           <input type="checkbox" name="compactViewEnabled" class="filled-in"/>
-                           <span>Enable compact card view</span>
-                       </label>
-                   </div>
-                   <button class="btn waves-effect waves-light blue lighten-2" type="submit" name="action">Save
-                       <i class="material-icons right">save</i>
-                   </button>
-               </form>
-           </div>
-       </div>
-   </div>
-</main>
+    <div class="container">
+        <div class="row">
+            <div class="col s12 input-field">
+                <h5>Settings</h5>
+                <form class="form-save-settings">
+                    <div class="settingsControls">
+                        <div>
+                            <label>
+                                <input type="checkbox" name="startCollapsed" class="filled-in"/>
+                                <span>Render accordion elements closed</span>
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="compactViewEnabled" class="filled-in"/>
+                                <span>Enable compact card view</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="settingsControls">
+                            <a href="#" class="btn waves-effect btn-clear-highscores waves-light blue lighten-2">Clear Highscores</a>
+                            <a href="#" class="btn waves-effect btn-clear-card-data waves-light blue lighten-2">Clear Cards</a>
+                            <a href="#" class="btn btn-block btn-clear-all-data waves-effect waves-light blue lighten-2">Clear All Data</a>
+                        </div>
+                    </div>
 
+
+                    <button class="btn waves-effect waves-light blue lighten-2" type="submit" name="action">Save
+                        <i class="material-icons right">save</i>
+                    </button>
+                </form>
+
+            </div>
+            <p class="label">v1.0.0.0</p>
+        </div>
+    </div>
+</main>
 <script src="sw-register.js"></script>
 <script src="js/utilities.js"></script>
 <script src="js/localforage.min.js"></script>

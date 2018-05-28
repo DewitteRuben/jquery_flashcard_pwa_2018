@@ -2,11 +2,11 @@
 
 let addCardsetModule = (function () {
 
-    let MESSAGES = {
+    const MESSAGES = {
         NO_CARDSETS: "No cardsets have been created yet!",
     };
 
-    let URL = {
+    const URL = {
         ADD_CARD_PAGE: "addcard.html"
     };
 
@@ -59,7 +59,7 @@ let addCardsetModule = (function () {
         e.stopPropagation();
         let cardsetName = $(this).parent().data("cardset").toString();
         let content = `<p>Are you sure you wish to delete the cardset ${cardsetName}?</p>`;
-        GuiModule.generateModal("deleteCardsetModal", content, "Decline", "Confirm", deleteCardsetByID(cardsetName));
+        GuiModule.generateModal("deleteCardsetModal", content, "Decline", "Confirm", deleteCardsetByID(cardsetName), UtilModule.fDefault);
     }
 
     function evAddCardset(e) {
@@ -119,7 +119,7 @@ let addCardsetModule = (function () {
                 <input  type="text" value="${oldCategory}" name="cardset-newCategory" id="cardset-newCategory">
             </div>`;
 
-        GuiModule.generateModal(id, content, "Decline", "Confirm", evConfirmCardsetEdit);
+        GuiModule.generateModal(id, content, "Decline", "Confirm", evConfirmCardsetEdit, UtilModule.fDefault);
     }
 
     function evAddCardToCardset(e) {

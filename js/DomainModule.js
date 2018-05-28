@@ -3,7 +3,7 @@
 let DomainModule = function () {
 
 
-    let cardTypeToPrettyName = {
+    const cardTypeToPrettyName = {
         "SA": "Single Answer",
         "TF": "True or False",
         "MC": "Multiple Choice",
@@ -35,14 +35,12 @@ let DomainModule = function () {
         this.cardset = cardset;
         this.currentCardIndex = 0;
         this.isFront = true;
-        this.isFinished = false;
         this.timeFinished = null;
     }
 
     Game.prototype.reset = function () {
         this.currentCardIndex = 0;
         this.isFront = true;
-        this.isFinished = false;
         this.timeFinished = null;
         this.cardset.cards.forEach(c => c.clearGuess());
     };
@@ -71,8 +69,28 @@ let DomainModule = function () {
         this.getCurrentCard().guess = guess;
     };
 
+    Game.prototype.isFinished = function () {
+        return this.getAmountCards() === this.getAnsweredCards().length;
+    };
+
     Game.prototype.getCorrectCards = function () {
         return this.getAnsweredCards().filter(c => c.isCorrectAnswer() === true);
+    };
+
+    Game.prototype.getAmountCorrectAnswers = function () {
+        return this.getCorrectCards().length;
+    };
+
+    Game.prototype.getAnswerAccuracy = function () {
+        return (this.getAmountCards() / this.getAnsweredCards().length).toFixed(3) * 100;
+    };
+
+    Game.prototype.getAmountWrongAnswers = function () {
+        return this.getAmountCards() - this.getAmountCorrectAnswers();
+    };
+
+    Game.prototype.getAmountCards = function () {
+        return this.cardset.cards.length;
     };
 
     Game.prototype.getAnsweredCards = function () {
@@ -156,7 +174,6 @@ let DomainModule = function () {
         this.name = name;
         this.category = category;
         this.cards = [];
-        this.bestScore = null;
     }
 
     CardSet.prototype.addCard = function (card) {
@@ -204,12 +221,48 @@ let DomainModule = function () {
         this.data = data;
     }
 
+    function Highscore(game, gameTime, date, realTime) {
+        this.date = date;
+        this.realTime = realTime;
+        this.game = game;
+    }
+
+    Highscore.prototype.save = function (cb) {
+        DataModule.pAddHighscore(this).then(cb).catch(function (err) {
+            GuiModule.showToast(err, "");
+        })
+    };
+
+    Highscore.prototype.render = function () {
+        let HTMLString = `<tr>
+            <td>${this.game.cardset.name}</td>
+            <td>${this.game.timeFinished}</td>
+            <td>${this.date.slice(0, -5)} ${this.realTime.slice(0, -3)}</td>
+            <td>${this.game.cardset.cards[0].title}</td>
+            <td>${this.game.cardset.cards[0].guess}</td>
+            <td>${this.game.cardset.cards[0].answer}</td>
+        </tr>`;
+        this.game.cardset.cards.shift();
+        this.game.cardset.cards.forEach(c => {
+            HTMLString += `<tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>${c.title}</td>
+                <td>${c.guess}</td>
+                <td>${c.answer}</td>
+            </tr>`
+        });
+        return HTMLString;
+    };
+
 
     return {
         Game: Game,
         Card: Card,
         Image: Image,
-        CardSet: CardSet
+        CardSet: CardSet,
+        Highscore: Highscore
     }
 
 

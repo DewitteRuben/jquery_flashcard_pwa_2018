@@ -1,19 +1,19 @@
 "use strict";
 let addCardModule = (function () {
 
-    let cardTypeToClassMap = {
+    const cardTypeToClassMap = {
         "SA": ".singleAnswer",
         "TF": ".trueFalse",
         "MC": ".multipleChoice",
     };
 
-    let cardTypes = {
+    const cardTypes = {
         SA: "SA",
         TF: "TF",
         MC: "MC"
     };
-    
-    let MESSAGES = {
+
+    const MESSAGES = {
         NO_CARDSETS: "No cardsets have been created yet!",
     };
 
@@ -161,7 +161,7 @@ let addCardModule = (function () {
         let id = "previewModal";
         let modalContent = `<h4>Preview</h4>
                         ${card.render()}`;
-        GuiModule.generateModal("previewModal", modalContent, "", "Close");
+        GuiModule.generateModal("previewModal", modalContent, "", "Close", UtilModule.fDefault, UtilModule.fDefault);
     }
 
     function evOpenPreviewCardModal(e) {

@@ -1,11 +1,11 @@
 "use strict";
 
 let indexModule = (function () {
-    let CATEGORY = {
+    const CATEGORY = {
         ALL: "ALL"
     };
 
-    let HTML = {
+    const HTML = {
         LI_ALL_TAB: `<li data-category="ALL" class="tab"><a href="#tab-all">ALL</a></li>`,
         UL_EMPTY_CARDSET: `<ul class="collection with-header collection-cardsets">
                 <li class="center collection-item">No cardsets have been created yet, tap the <i class="material-icons">create_new_folder</i> button to add a cardset!<li>
@@ -22,7 +22,7 @@ let indexModule = (function () {
                 </section>`
     };
 
-    let URL = {
+    const URL = {
         GAME_PAGE: "cardgame.html",
         ADD_CARD_PAGE: "addcard.html"
     };
@@ -162,7 +162,7 @@ let indexModule = (function () {
                 <label class="active" for="newName">New category:</label>
                 <input  type="text" value="${oldCategory}" name="cardset-newCategory" id="cardset-newCategory">
             </div>`;
-        GuiModule.generateModal(id, content, "Decline", "Confirm", evConfirmCardsetNameChangePredicate(oldName));
+        GuiModule.generateModal(id, content, "Decline", "Confirm", evConfirmCardsetNameChangePredicate(oldName), UtilModule.fDefault);
     }
 
     function evShowEditCardsetModal(e) {
@@ -184,7 +184,7 @@ let indexModule = (function () {
         e.stopPropagation();
         let cardsetName = $(this).parents(".cardset").data("cardset").toString();
         let content = `<p>Are you sure you wish to delete the cardset ${cardsetName}?</p>`;
-        GuiModule.generateModal("deleteCardsetModal", content, "Decline", "Confirm", deleteCardsetByID(cardsetName));
+        GuiModule.generateModal("deleteCardsetModal", content, "Decline", "Confirm", deleteCardsetByID(cardsetName), UtilModule.fDefault);
     }
 
 
@@ -252,8 +252,8 @@ let indexModule = (function () {
             return card.image;
         }).then(function (imageFile) {
             let modalContent = `<img class="responsive-img" src="${imageFile.data}" alt="card-image" title="card-image"/>`;
-            GuiModule.generateModal("imageModal", modalContent, "", "Close", function () {});
-        }).catch(function(err) {
+            GuiModule.generateModal("imageModal", modalContent, "", "Close", UtilModule.fDefault, UtilModule.fDefault);
+        }).catch(function (err) {
             GuiModule.showToast(err, "");
         })
     }

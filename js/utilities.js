@@ -62,6 +62,10 @@ let UtilModule = function () {
         return navigator.onLine;
     }
 
+    function fDefault(e) {
+        e.preventDefault();
+        return undefined;
+    }
 
     return {
         isEmpty: isEmpty,
@@ -73,6 +77,7 @@ let UtilModule = function () {
         validateSelect:validateSelect,
         isOnline:isOnline,
         getSelectOptionByName:getSelectOptionByName,
+        fDefault:fDefault,
         getUniqueValuesOfObjectsInMap: getUniqueValuesOfObjectsInMap,
     }
 }();

@@ -5398,7 +5398,7 @@ button.btn-floating {
 }
 
 .btn-block {
-    display: block
+    display: block !important;
 }
 
 .dropdown-content {

@@ -5,6 +5,7 @@ let DataModule = function () {
     const STORAGE = {
         STORE: "cardStorage",
         CARDSETS: "cardSets",
+        HIGHSCORES:"highscores",
     };
 
     const KEYS = {
@@ -12,6 +13,7 @@ let DataModule = function () {
         GAME: "currentGame",
         CARD: "editCard",
         SETTINGS: "settings",
+        USERNAME: "username",
         CURRENT_CARDSET: "currentCardset"
     };
 
@@ -41,11 +43,22 @@ let DataModule = function () {
         store.getItem(STORAGE.CARDSETS).then(function (cardsets) {
             if (!cardsets) {
                 console.log("Cardsets storage doesn't exist, creating new storage space...");
-                store.setItem(STORAGE.CARDSETS, new Map());
+                return store.setItem(STORAGE.CARDSETS, new Map());
             }
+        }).then(function() {
+          store.getItem(STORAGE.HIGHSCORES).then(function(highscores) {
+              if (!highscores) {
+                  console.log("Highscores storage spaces doesn't exist, creating storage space...");
+                  return store.setItem(STORAGE.HIGHSCORES, []);
+              }
+          })
         }).catch((err) => {
             throw Error("Failed to initialize cardset storage space");
         });
+    }
+
+    function setHighscoresArr(arr) {
+        return store.setItem(STORAGE.HIGHSCORES, arr);
     }
 
     function rebuildCardSetMap(cardMap) {
@@ -110,6 +123,36 @@ let DataModule = function () {
             });
     }
 
+    function pAddHighscore(highscore) {
+        return store.getItem(STORAGE.HIGHSCORES).then(function(highscores) {
+            if (!highscores)
+                throw Error("There is no highscore object in the database!");
+            highscores.push(highscore);
+            return highscores;
+        }).then(function(updatedHighscores) {
+            return store.setItem(STORAGE.HIGHSCORES, updatedHighscores);
+        }).then(function() {
+            return Promise.resolve("Successfully added highscore entry!");
+        })
+    }
+
+    function rebuildHighscores(arr) {
+        console.log(arr);
+        console.log(arr.map(score => Object.assign(new DomainModule.Highscore, score)));
+        return arr.map(score => Object.assign(new DomainModule.Highscore, score));
+    }
+
+    function pGetAllHighscores() {
+        return store.getItem(STORAGE.HIGHSCORES).then(function(highscores) {
+            console.log(highscores);
+            console.log(rebuildHighscores(highscores));
+            return rebuildHighscores(highscores);
+        }).catch(function(err) {
+            console.log(err);
+            throw Error("Failed to get all highscores!");
+        })
+    }
+
     function pSetCardsetMap(map) {
         return store.setItem(STORAGE.CARDSETS, map);
     }
@@ -118,7 +161,7 @@ let DataModule = function () {
         return pGetAllCardsets().then(function (map) {
             map.set(cardset.name, cardset);
             return store.setItem(STORAGE.CARDSETS, map);
-        }).then(function() {
+        }).then(function () {
             return Promise.resolve(`Successfully added the ${cardset.name} cardset!`);
         }).catch(function (err) {
             throw Error(ERROR.CARDSET_ADD_FAIL);
@@ -140,7 +183,7 @@ let DataModule = function () {
                     throw Error(ERROR.CARDSET_ALREADY_EXISTS);
             }
             return newCardset;
-        }).then(function(uniqueCardset) {
+        }).then(function (uniqueCardset) {
             return pAddUpdateCardset(uniqueCardset);
         }).catch(err => {
             throw Error(ERROR.CARDSET_ADD_FAIL);
@@ -297,6 +340,22 @@ let DataModule = function () {
         return store.getItem(KEYS.CARD);
     }
 
+    function setUsername(username) {
+        try {
+            localStorage.setItem(KEYS.USERNAME, username);
+        } catch (err) {
+            throw Error("Failed to set username!");
+        }
+    }
+
+    function getUsername() {
+        try {
+            return localStorage.getItem(KEYS.USERNAME);
+        } catch (err) {
+            throw Error("Failed to get username!");
+        }
+    }
+
     function getSettings() {
         if (window.localStorage)
             return JSON.parse(localStorage.getItem(KEYS.SETTINGS));
@@ -320,6 +379,7 @@ let DataModule = function () {
         postData: postData,
         pGetCardset: pGetCardset,
         pFileReader: pFileReader,
+        setHighscoresArr:setHighscoresArr,
         storageClearPictureData: storageClearPictureData,
         startCurrentGame: startCurrentGame,
         getCurrentGame: getCurrentGame,
@@ -337,6 +397,11 @@ let DataModule = function () {
         pUpdateCard: pUpdateCard,
         storageGetLoadedPicture: storageGetLoadedPicture,
         storageSavePicture: storageSavePicture,
+        setUsername: setUsername,
+        pAddHighscore:pAddHighscore,
+        pGetAllHighscores:pGetAllHighscores,
+        getUsername: getUsername,
+        pSetCardsetMap:pSetCardsetMap,
         KEYS: KEYS,
         store: store,
         init: init

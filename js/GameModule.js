@@ -4,15 +4,24 @@ let GameModule = (function () {
     let timer = new Timer();
     let gamehandler = null;
 
+    const URL = {
+        HOME: "index.html",
+        HIGHSCORES:"gameoverview.html"
+    };
+
     function GameHandler(game) {
         this.game = game;
         this.game.reset();
         gamehandler = this;
     }
 
+    function showEndGameStats() {
+        showStatsModal();
+    }
+
     function getGame() {
         return gamehandler.game;
-    };
+    }
 
     function updateGameCard(e) {
         if (e.data.prev) {
@@ -40,41 +49,48 @@ let GameModule = (function () {
         return timer.getTimeValues().toString();
     }
 
-    function stopTimer() {
+    function stopAndSaveTime() {
+        gamehandler.game.timeFinished = getTime();
         timer.stop();
     }
 
-    function isGameFinishedOnNextAnswer() {
-        return gamehandler.game.getAnsweredCards().length + 1 === gamehandler.game.cardset.cards.length;
-    }
-
     function showStatsModal() {
-        let modalContent = `<h5>Finished!</h5>`
-        // GuiModule.generateModal("finishedGameModal", )
+        let modalContent = `<h5>Game Finished!</h5>
+                            <p>Current Game: ${gamehandler.game.cardset.name}</p>
+                            <ul>
+                                <li>Time: ${gamehandler.game.timeFinished}</li>
+                                <li>Correct: ${gamehandler.game.getAmountCorrectAnswers()}</li>
+                                <li>Wrong: ${gamehandler.game.getAmountWrongAnswers()}</li>
+                                <li>Accuracy: ${gamehandler.game.getAnswerAccuracy()}%</li>
+                            </ul>
+                            <p>Note: A detailed overview will be saved in the highscores!</p>`;
+
+        GuiModule.generateModal("finishedGameModal", modalContent, "Home", "Save",
+            evSaveHighscores, evCloseHighscoreModal);
     }
 
-    function getScore() {
-        return (gamehandler.game.getCorrectCards().length / gamehandler.game.getAnsweredCards().length).toFixed(3) * 100;
+    function evSaveHighscores(e) {
+        e.preventDefault();
+        let date = new Date();
+        let realTime = date.toLocaleTimeString();
+        let realDate = date.toLocaleDateString();
+        let highscore = new DomainModule.Highscore(gamehandler.game, getTime(), realDate, realTime);
+        highscore.save(e => window.location.href = URL.HIGHSCORES);
     }
 
-    function setScore() {
-        let score = gamehandler.game.cardset.bestScore;
-        if (!score || getScore() > score) {
-            gamehandler.game.cardset.bestScore = getScore();
-        }
+    function evCloseHighscoreModal(e) {
+        e.preventDefault();
+        window.location.href = URL.HOME;
     }
+
 
     function finishGame() {
-        gamehandler.game.isFinished = true;
-        gamehandler.game.timeFinished = getTime();
-        setScore();
+        stopAndSaveTime();
+        showStatsModal();
     }
 
     function answer(e) {
         e.preventDefault();
-        if (isGameFinishedOnNextAnswer()) {
-            alert("Ja, tis gebeurt!");
-        }
 
         let answer;
         switch (e.data.type) {
@@ -95,7 +111,12 @@ let GameModule = (function () {
 
         gamehandler.game.answer(answer);
         GuiModule.updateGameCardLayout(gamehandler.game);
+
+        if (gamehandler.game.isFinished()) {
+            finishGame();
+        }
     }
+
 
     return {
         initGame: GameHandler,

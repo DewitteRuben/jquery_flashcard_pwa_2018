@@ -93,15 +93,17 @@ let DomainModule = function () {
     };
 
     Card.prototype.renderCompact = function () {
-        return `<div id="test-0" class="card">
+        return `<div id="${this.id}" data-card="${this.id}" class="card">
                 <a href="#" class="faint-black delete-card-collection-item"><i class="delete material-icons">delete</i></a>
-                ${this.image ? `<a href="#" data-image="${this.image}"class="faint-black image-card-collection-item"><i class="edit material-icons">photo</i></a>` : ""}
+                <a href="#/" class="faint-black edit-card-collection-item"><i class="edit material-icons">edit</i></a>
+                ${this.image ? `<a href="#" class="faint-black image-card-collection-item"><i class="photo material-icons">photo</i></a>` : ""}
                 <div class="card-content">
+                    <span class="card-title compact-title">${this.title}</span>
                     <p>Q: ${this.question}</p>
                     <p class="answer">A: ${this.answer}</p>
                     <p class="answers">${this.isMultipleChoice() ? `<p class="choices">${this.answerChoices.join(",")}</p>` : ""}</p>
                     <p class="type">${cardTypeToPrettyName[this.type]}</p>
-                    <p class="typing">${this.typeAnswer ? "Type the answer" : ""}</p>
+                    <p class="typing type keyboard">${this.typeAnswer ? '<i class="material-icons">keyboard</i>' : ''}</p>
                 </div>   
             </div>`;
     };
@@ -109,13 +111,15 @@ let DomainModule = function () {
     Card.prototype.render = function () {
         let HTMLString =
             `<div id="${this.id}" class="card">
-                               <a href="#" class="faint-black delete-card-collection-item"><i class="delete material-icons">delete</i></a>
+                               <a href="#/" class="faint-black delete-card-collection-item"><i class="delete material-icons">delete</i></a>
+                               <a href="#/" class="faint-black edit-card-collection-item"><i class="edit material-icons">edit</i></a>
                                <div class="card-content">
                                     <span class="card-title">${this.title}</span>`;
 
         if (this.image) {
-            HTMLString += `<div>
-                                  <img class="responsive-img" src="${this.image}" alt="card-image" title="card-image"">
+            console.log(this.image);
+            HTMLString += `<div class="center">
+                                  <img class="responsive-img" src="${this.image.data}" alt="card-image" title="card-image"">
                            </div>`;
         }
 
@@ -127,7 +131,7 @@ let DomainModule = function () {
                                                                 ${this.answerChoices.join(",")}
                                                                 </p>` : ""}</p>
                                     <p class="type">${cardTypeToPrettyName[this.type]}</p>
-                                    <p class="typing">${this.typeAnswer ? "Type the answer" : ""}</p>
+                                    <p class="typing type keyboard">${this.typeAnswer ? '<i class="material-icons">keyboard</i>' : ''}</p>
                                 </div>
                             </div>`;
         return HTMLString;
@@ -195,9 +199,16 @@ let DomainModule = function () {
         return (!UtilModule.isEmpty(this.name) && !UtilModule.isEmpty(this.category));
     };
 
+    function Image(name, data) {
+        this.name = name;
+        this.data = data;
+    }
+
+
     return {
         Game: Game,
         Card: Card,
+        Image: Image,
         CardSet: CardSet
     }
 

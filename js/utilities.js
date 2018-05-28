@@ -37,11 +37,6 @@ let UtilModule = function () {
         return uniques;
     }
 
-    Object.filter = (obj, predicate) =>
-        Object.keys(obj)
-            .filter(key => predicate(obj[key]))
-            .reduce((res, key) => (res[key] = obj[key], res), {});
-
     function scrollToBottom() {
         $('html,body').animate({scrollTop: document.body.scrollHeight}, "fast");
     }
@@ -57,37 +52,6 @@ let UtilModule = function () {
     function validateSelect() {
         // hack to make materialize select validate
         $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
-    }
-
-
-    if (typeof Object.assign != 'function') {
-        // Must be writable: true, enumerable: false, configurable: true
-        Object.defineProperty(Object, "assign", {
-            value: function assign(target, varArgs) { // .length of function is 2
-                'use strict';
-                if (target == null) { // TypeError if undefined or null
-                    throw new TypeError('Cannot convert undefined or null to object');
-                }
-
-                var to = Object(target);
-
-                for (var index = 1; index < arguments.length; index++) {
-                    var nextSource = arguments[index];
-
-                    if (nextSource != null) { // Skip over if undefined or null
-                        for (var nextKey in nextSource) {
-                            // Avoid bugs when hasOwnProperty is shadowed
-                            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-                                to[nextKey] = nextSource[nextKey];
-                            }
-                        }
-                    }
-                }
-                return to;
-            },
-            writable: true,
-            configurable: true
-        });
     }
 
 

@@ -34,6 +34,7 @@ let indexModule = (function () {
         initCategoryTabs($tabs);
         $tabs.on("click", ".tab", evChangingTabs);
         $cards.on("click", ".delete-card-collection-item", evTriggerCardDelete);
+        $cards.on("click", ".edit-card-collection-item", evTriggerCardEdit);
         $cards.on("click", ".image-card-collection-item", evShowImageModal);
     }
 
@@ -219,7 +220,7 @@ let indexModule = (function () {
             let newName = $("#cardset-newName").val();
             let newCategory = $("#cardset-newCategory").val();
             let cardset = new DomainModule.CardSet(newName, newCategory);
-            DataModule.pUpdateCardset(oldName, cardset).then(
+            DataModule.pRenameCardset(oldName, cardset).then(
                 e => {
                     initCardsetsList($(".cards"), CATEGORY.ALL);
                     initCategoryTabs($(".tabs"));
@@ -233,6 +234,7 @@ let indexModule = (function () {
         e.preventDefault();
         let cardID = $(this).parent().attr("id");
         let cardTitle = $(this).siblings(".card-content").find(".card-title").text();
+        console.log(cardID, cardTitle);
         showDeleteCardModal(cardID, cardTitle);
     }
 
@@ -245,11 +247,26 @@ let indexModule = (function () {
 
     function evShowImageModal(e) {
         e.preventDefault();
-        let modalContent = `<img class="responsive-img" src="${$(this).data("image")}" 
-                                 alt="card-image" 
-                                 title="card-image"/>`;
-        GuiModule.generateModal("imageModal", modalContent, "", "Close", function () {
-        });
+        let cardID = $(this).parent().data("card");
+        DataModule.pGetCardByID(cardID).then(function (card) {
+            return card.image;
+        }).then(function (imageFile) {
+            let modalContent = `<img class="responsive-img" src="${imageFile.data}" alt="card-image" title="card-image"/>`;
+            GuiModule.generateModal("imageModal", modalContent, "", "Close", function () {});
+        }).catch(function(err) {
+            GuiModule.showToast(err, "");
+        })
+    }
+
+    function evTriggerCardEdit(e) {
+        e.preventDefault();
+        let cardID = $(this).parent().attr("id");
+        DataModule.pGetCardByID(cardID).then(function (card) {
+            sessionStorage.setItem("editingCard", JSON.stringify(card));
+            return card;
+        }).then(function (card) {
+            window.location.href = URL.ADD_CARD_PAGE;
+        }).catch(err => GuiModule.showToast(err, ""));
     }
 
     return {
@@ -263,7 +280,7 @@ $(document).ready(function () {
     $('.fixed-action-btn').floatingActionButton();
 });
 
-$(window).on("load", function() {
+$(window).on("load", function () {
     // if (!navigator.onLine)
 
 });

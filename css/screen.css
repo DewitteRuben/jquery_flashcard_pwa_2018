@@ -38,12 +38,14 @@ section.cardset header {
     top: 13px;
 }
 
-.type {
-    color: #8c9eff;
+.photo {
+    position: absolute;
+    right: 62px;
+    top: 13px;
 }
 
-.addCard {
-    /*padding:0.3rem;*/
+.type {
+    color: #8c9eff;
 }
 
 .btn-create-cardset, .btn-picture-upload {
@@ -156,6 +158,25 @@ div.collapsible-items i {
     right: 0;
 }
 
+
+.keyboard {
+    position: absolute;
+    right: 14px;
+    bottom: 20px;
+}
+
+.card span.card-title.compact-title {
+    line-height:20px;
+    font-size:21px;
+}
+
 .sick-blue {
     background-color: #86b6dd;
+}
+
+#imageInformation {
+    margin-top:10px;
+    margin-bottom:10px;
+    color:#9e9e9e;
+    font-size: .8rem;
 }

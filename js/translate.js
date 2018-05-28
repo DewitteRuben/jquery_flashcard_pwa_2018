@@ -10,9 +10,9 @@ let TranslateModule = function () {
             if (result) {
                 if (!result.hasOwnProperty("code"))
                     return result;
-                return Promise.reject("Failed to translate, reason: " + result.message);
+                throw Error("Failed to translate, reason: " + result.message);
             }
-            return Promise.reject("Failed to receive a response from the translation service.");
+            throw Error("Failed to receive a response from the translation service.");
         });
     }
 
@@ -22,9 +22,9 @@ let TranslateModule = function () {
             if (result) {
                 if (result.code === 200)
                     return result;
-                return Promise.reject("Failed to translate, reason: " + result.message);
+                throw Error("Failed to translate, reason: " + result.message);
             }
-            return Promise.reject("Failed to receive a response from the translation service.");
+            throw Error("Failed to receive a response from the translation service.");
         });
     }
 

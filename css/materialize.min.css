@@ -2479,7 +2479,7 @@ i.large {
 }
 
 img.responsive-img, video.responsive-video {
-    max-width: 100%;
+    max-width: 90%;
     height: auto
 }
 
@@ -5706,6 +5706,9 @@ button.btn-floating {
     padding: 1rem;
     background-color: #fff;
     border-bottom: 1px solid #ddd
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .collapsible-header i {

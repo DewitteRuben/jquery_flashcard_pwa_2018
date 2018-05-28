@@ -17,7 +17,7 @@
 
     <nav class="sick-blue">
         <div class="nav-wrapper">
-            <a href="#/" class="brand-logo center">Card</a>
+            <a href="#/" class="brand-logo center">Add/Edit Card</a>
             <ul class="left">
                 <li><a href="javascript: history.back()">
                     <i class="material-icons">arrow_back</i>
@@ -82,7 +82,11 @@
                     <label for="card-question">Question / Input:</label>
                     <input id="card-question" placeholder="Enter your question" name="question" type="text"
                            class="validate" required>
-                    <span class="label">Image: <span id="imageName">none</span></span>
+                    <div id="imageInformation">
+                        Image:
+                        <span id="imageName">none</span>
+                        <a href="#/" class="clear-loaded-image hidden"><i class="material-icons">clear</i></a>
+                    </div>
                 </div>
 
                 <div class="file-field col s3">
@@ -110,7 +114,7 @@
 
                         <div class="col s12">
                             <label>
-                                <input id="checkbox-type-answer" type="checkbox" class="filled-in"/>
+                                <input id="checkbox-type-answer" name="checkbox-type-answer" type="checkbox" class="filled-in"/>
                                 <span>Enable type the answer for this card</span>
                             </label>
 
@@ -119,9 +123,9 @@
 
                     </div>
                     <div class="trueFalse hidden answerInput col s12">
-                        <a class="left waves-effect waves-light btn answer-false grey red" data-value="false"><i
+                        <a id="answer-false" class="left waves-effect waves-light btn answer-false grey red" data-value="false"><i
                                 class="material-icons right">close</i>False</a>
-                        <a class="right waves-effect waves-light btn answer-true grey green" data-value="true"><i
+                        <a id="answer-true" class="right waves-effect waves-light btn answer-true grey green" data-value="true"><i
                                 class="material-icons right">check</i>True</a>
                     </div>
                     <div class="multipleChoice hidden answerInput col s12">
@@ -155,7 +159,6 @@
         </form>
     </div>
 </main>
-
 
 <div id="translateModal" class="modal">
     <div class="modal-content">
@@ -211,5 +214,6 @@
 <script src="js/DataModule.js"></script>
 <script src="js/GuiModule.js"></script>
 <script src="js/addcard.js"></script>
+<script src="js/editcard.js"></script>
 </body>
 </html>

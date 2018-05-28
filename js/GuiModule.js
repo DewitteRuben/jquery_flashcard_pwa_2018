@@ -128,13 +128,13 @@ let GuiModule = function () {
     }
 
     function cardImage2ImageTag(card) {
-        return $(`<img class="card-play-image responsive-img" src="${card.image ? card.image : ""}" alt="${card.title}-image">`);
+        return $(`<img class="card-play-image responsive-img" src="${card.image ? card.image.data : ""}" alt="${card.title}-image">`);
     }
 
     function toggleCardImage(game) {
         let card = game.getCurrentCard();
         $(".card-play-image").remove();
-        let $cardPlay = $(".card-content");
+        let $cardPlay = $(".card-content .img-wrapper");
         if (card.image && game.isFront) {
             $cardPlay.append(cardImage2ImageTag(card));
         }
@@ -147,24 +147,15 @@ let GuiModule = function () {
         $(".card-side").text(game.isFront ? MESSAGES.FRONT : MESSAGES.BACK);
         $(".gameCardsAnswered").text(`Answered: ${game.getAnsweredCards().length}/${game.cardset.cards.length}`);
         $(".gameCardsCorrectlyAnswered").text(`Correct: ${game.getCorrectCards().length}/${game.cardset.cards.length}`);
+        $(".currentCard").text(`${(game.currentCardIndex + 1)}/${game.cardset.cards.length}`);
         setSmileyState(game);
         toggleGameUIControls(game.hasBeenAnswered(curCard));
         toggleCardImage(game);
         switchGameUIControls(curCard);
     }
 
-    /*-------------------------------------------------------------------------------------------/
-     */
-
     function removeModalOnClose() {
         $(this)[0].$el.remove();
-    }
-
-    function showOfflineMessage() {
-        if (!sessionStorage.getItem("isOffline")) {
-            showToast(MESSAGES.OFFLINE, "");
-            sessionStorage.setItem("isOffline", "true");
-        }
     }
 
     function showToast(text, classOpt) {
@@ -176,7 +167,6 @@ let GuiModule = function () {
         showModal: showModal,
         object2options: object2options,
         showToast: showToast,
-        populateRadioAnswers: populateRadioAnswers,
         generateModal: generateModal,
         loadingSpinner: loadingSpinner,
     }

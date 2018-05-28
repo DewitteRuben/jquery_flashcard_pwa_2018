@@ -6,8 +6,8 @@ let addCardsetModule = (function () {
         NO_CARDSETS: "No cardsets have been created yet!",
     };
 
-    let URL= {
-        ADD_CARD_PAGE:"addcard.html"
+    let URL = {
+        ADD_CARD_PAGE: "addcard.html"
     };
 
 
@@ -69,13 +69,18 @@ let addCardsetModule = (function () {
         let cardset = new DomainModule.CardSet(cardsetName, cardsetCategory);
 
         DataModule.pAddCardset(cardset)
-            .then(msg => GuiModule.showToast(msg, ""))
+            .then(msg => {
+                if (msg)
+                    GuiModule.showToast(msg, "");
+            })
             .then(populateCollectionWithCardsets)
             .then(e => {
                 $(this)[0].reset();
                 UtilModule.scrollToBottom();
             })
-            .catch(err => GuiModule.showToast(err, ""));
+            .catch(err => {
+                GuiModule.showToast(err, "")
+            });
     }
 
     function evTriggerSubmit(e) {
@@ -90,7 +95,7 @@ let addCardsetModule = (function () {
         let oldName = $newName.data("oldname").toString();
         let newCategory = $("#cardset-newCategory").val();
         let cardset = new DomainModule.CardSet(newName, newCategory);
-        DataModule.pUpdateCardset(oldName, cardset).then(e => {
+        DataModule.pRenameCardset(oldName, cardset).then(e => {
             populateCollectionWithCardsets();
             GuiModule.showToast(e, "");
         }).catch(err => GuiModule.showToast(err, ""));

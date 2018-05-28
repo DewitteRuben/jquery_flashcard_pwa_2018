@@ -82,7 +82,7 @@ let DomainModule = function () {
     };
 
     Game.prototype.getAnswerAccuracy = function () {
-        return (this.getCorrectCards().length / this.cardset.cards().length).toFixed(3) * 100;
+        return Math.round((this.getCorrectCards().length / this.cardset.cards.length) * 100);
     };
 
     Game.prototype.getAmountWrongAnswers = function () {
@@ -238,15 +238,16 @@ let DomainModule = function () {
             <td>${this.game.cardset.name}</td>
             <td>${this.game.timeFinished}</td>
             <td>${this.date.slice(0, -5)} ${this.realTime.slice(0, -3)}</td>
-            <td>${this.game.cardset.cards[0].title}</td>
-            <td>${this.game.cardset.cards[0].guess}</td>
-            <td>${this.game.cardset.cards[0].answer}</td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>`;
-        this.game.cardset.cards.shift();
         this.game.cardset.cards.forEach(c => {
             HTMLString += `<tr>
                 <td></td>
-                <td></td>
+                <td>${UtilModule.isEqualToCaseInsensitive(c.guess, c.answer) ? 
+                `<i class="material-icons">check</i>` : 
+                `<i class="material-icons">close</i>`}</td>
                 <td></td>
                 <td>${c.title}</td>
                 <td>${c.guess}</td>

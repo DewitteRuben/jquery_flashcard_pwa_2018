@@ -95,7 +95,8 @@ let GameModule = (function () {
         let answer;
         switch (e.data.type) {
             case "SA":
-                answer = e.data.correct ? gamehandler.game.getCurrentCard().answer : "";
+                let realAnswer = gamehandler.game.getCurrentCard().answer;
+                answer = e.data.correct ? realAnswer : `Not ${realAnswer}`;
                 if (gamehandler.game.getCurrentCard().typeAnswer)
                     answer = $("#game-type-answer").val();
                 break;

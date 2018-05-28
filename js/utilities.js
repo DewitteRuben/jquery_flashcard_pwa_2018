@@ -54,6 +54,14 @@ let UtilModule = function () {
         $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
     }
 
+    function getSelectOptionByName(selectName) {
+        return $(`select[name="${selectName}"]`).find("option:selected").val();
+    }
+
+    function isOnline() {
+        return navigator.onLine;
+    }
+
 
     return {
         isEmpty: isEmpty,
@@ -63,6 +71,8 @@ let UtilModule = function () {
         scrollToBottom:scrollToBottom,
         cardsetNameComparator:cardsetNameComparator,
         validateSelect:validateSelect,
+        isOnline:isOnline,
+        getSelectOptionByName:getSelectOptionByName,
         getUniqueValuesOfObjectsInMap: getUniqueValuesOfObjectsInMap,
     }
 }();

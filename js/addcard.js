@@ -12,36 +12,28 @@ let addCardModule = (function () {
         TF: "TF",
         MC: "MC"
     };
-
-    var SELECT = ["card-types", "available-cardsets"];
-
+    
     let MESSAGES = {
         NO_CARDSETS: "No cardsets have been created yet!",
     };
 
     function init() {
         populateCardsetSelect();
-        populateLanguagesSelect();
         UtilModule.validateSelect();
         $(".form-add-card").on("submit", evAddCardToCardset);
         $(".link-check-form").on("click", triggerSubmit);
         $(".answer-false").on("click", toggleColor).next().on("click", toggleColor);
         $("select[name='card-types']").on("change", switchChangeHandler);
-        $(".btn-translate-modal").on("click", openTranslateModal);
-        $(".btn-translate-input").on("click", translateInput);
-        $("#card-question").on("input", handleTranslateButton);
         $("#input-card-picture").on("change", onImageFileSelect);
         $(".btn-preview-card").on("click", evOpenPreviewCardModal);
-        $(".translate-decline").on("click", declineTranslateOnModalClose);
-        $(".modal-close").on("click", onTranslateModalClose);
         $(".clear-loaded-image").on("click", evClearLoadedImage);
     }
 
     function getCardFromInput() {
         let $inputCardName = $("#card-name");
         let cName = $inputCardName.val();
-        let cAnswer = getAnswer(getSelectedOptionByName("card-types"));
-        let cType = getSelectedOptionByName("card-types");
+        let cAnswer = getAnswer(UtilModule.getSelectOptionByName("card-types"));
+        let cType = UtilModule.getSelectOptionByName("card-types");
         let cQuestion = $("#card-question").val();
         let card = new DomainModule.Card(cName, cType, cQuestion, cAnswer);
         card.typeAnswer = $("#checkbox-type-answer").prop("checked");
@@ -67,11 +59,6 @@ let addCardModule = (function () {
             .then(populateSelectWithCardsetMap($("select[name='available-cardsets']")));
     }
 
-    function populateLanguagesSelect() {
-        TranslateModule.getAllAvailableLanguages().then(function (result) {
-            $("#available-languages").html(GuiModule.object2options(result.langs)).formSelect();
-        });
-    }
 
     function cardsetMap2OptionsHTML(cardsetMap) {
         let HTMLString = "";
@@ -128,10 +115,6 @@ let addCardModule = (function () {
             .prop("required", true);
     }
 
-    function getSelectedOptionByName(selectName) {
-        return $(`select[name="${selectName}"]`).find("option:selected").val();
-    }
-
     function triggerSubmit(e) {
         e.preventDefault();
         $(".btn-add-card").click();
@@ -147,46 +130,6 @@ let addCardModule = (function () {
 
     function switchChangeHandler(e) {
         switchAnswerUI($(this).find("option:selected").val());
-    }
-
-    function toggleProgressbar() {
-        $(".progressbar").toggleClass("hidden");
-    }
-
-
-    function translateTextField(value, targetLanguage) {
-        let $progressbar = $(".progressbar");
-        if (!UtilModule.isEmpty(value)) {
-            $progressbar.removeClass("hidden");
-            TranslateModule.translate(value, targetLanguage).then(function (result) {
-                console.log(result);
-                $("#card-ouput-t").val(result.text[0]);
-                $("#card-answer").val(result.text[0]);
-                $progressbar.addClass("hidden");
-            }).catch(err => {
-                $progressbar.addClass("hidden");
-                GuiModule.showToast(err, "")
-            });
-        }
-    }
-
-    function translateInput(e) {
-        e.preventDefault();
-        let value = $.trim($("#card-input-t").val());
-        let targetLanguage = getSelectedOptionByName("available-languages");
-        translateTextField(value, targetLanguage);
-    }
-
-    function openTranslateModal(e) {
-        e.preventDefault();
-        let $translateModal = $("#translateModal");
-        $("#card-input-t").val($("#card-question").val());
-        $translateModal.modal().modal("open");
-    }
-
-    function handleTranslateButton(e) {
-        e.preventDefault();
-        $(".btn-translate-modal").attr("disabled", UtilModule.isEmpty($(this).val()));
     }
 
     function updateImageSpan() {
@@ -231,19 +174,10 @@ let addCardModule = (function () {
         }
     }
 
-    function declineTranslateOnModalClose(e) {
-        e.preventDefault();
-        $("#card-answer").val("");
-    }
-
-    function onTranslateModalClose() {
-        $("#translateModal").find("input:not(.dropdown-trigger)").val("");
-    }
-
     function evAddCardToCardset(e) {
         e.preventDefault();
 
-        let cSetName = getSelectedOptionByName("available-cardsets");
+        let cSetName = UtilModule.getSelectOptionByName("available-cardsets");
         let card = getCardFromInput();
         console.log(card);
         DataModule.pAddCardToCardset(card, cSetName)

@@ -12,6 +12,8 @@ var cacheFiles = [
     "css/font-awesome.min.css",
     "js/addcard.js",
     "js/addcardset.js",
+    "js/addcardtranslate.js",
+    "js/editcard.js",
     "js/DataModule.js",
     "js/DomainModule.js",
     "js/GameModule.js",

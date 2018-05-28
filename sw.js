@@ -56,8 +56,10 @@ self.addEventListener('fetch', function (event) {
             return cache.match(event.request).then(function (response) {
                 var fetchPromise = fetch(event.request).then(function (networkResponse) {
                     // console.log("Fetching from internet");
-                    if (event.request.method === "GET")
+                    if (event.request.method === "GET") {
                         cache.put(event.request, networkResponse.clone());
+                        console.log(cache.put(event.request, networkResponse.clone()));
+                    }
                     // console.log("Cached the response", networkResponse.clone());
                     return networkResponse;
                 }).catch(function () {

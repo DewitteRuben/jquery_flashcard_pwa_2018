@@ -82,7 +82,7 @@ let DomainModule = function () {
     };
 
     Game.prototype.getAnswerAccuracy = function () {
-        return (this.getAmountCards() / this.getAnsweredCards().length).toFixed(3) * 100;
+        return (this.getCorrectCards() / this.getAnsweredCards().length).toFixed(3) * 100;
     };
 
     Game.prototype.getAmountWrongAnswers = function () {

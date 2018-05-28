@@ -98,18 +98,12 @@ let addCardModule = (function () {
         };
     }
 
-    function resetImageStatusSpan() {
-        $("#imageName")
-            .text("none")
-            .removeClass();
-    }
-
     function resetForm() {
         $(".form-add-card")[0].reset();
         populateCardsetSelect();
         $("#card-types").formSelect();
         M.updateTextFields();
-        resetImageStatusSpan();
+        updateImageSpan();
     }
 
     function getAnswer(cardType) {

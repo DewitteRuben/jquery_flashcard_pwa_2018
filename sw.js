@@ -27,52 +27,46 @@ var cacheFiles = [
     "js/utilities.js",
 ];
 
-self.addEventListener('install', function(evt) {
-    console.log('The service worker is being installed.');
-
-    // Ask the service worker to keep installing until the returning promise
-    // resolves.
-    evt.waitUntil(precache());
+self.addEventListener('install', function (e) {
+    e.waitUntil(
+        caches.open(cacheName).then(function (cache) {
+            console.log("Cashing files");
+            return cache.addAll(cacheFiles);
+        })
+    );
 });
 
-// On fetch, use cache but update the entry with the latest contents
-// from the server.
-self.addEventListener('fetch', function(evt) {
-    console.log('The service worker is serving the asset.');
-    // You can use `respondWith()` to answer immediately, without waiting for the
-    // network response to reach the service worker...
-    evt.respondWith(fromCache(evt.request));
-    // ...and `waitUntil()` to prevent the worker from being killed until the
-    // cache is updated.
-    evt.waitUntil(update(evt.request));
+
+self.addEventListener('activate', function (event) {
+    event.waitUntil(
+        caches.keys().then(function (cacheNames) {
+            return Promise.all(
+                cacheNames.filter(function (cacheName) {
+                }).map(function (cacheName) {
+                    return caches.delete(cacheName);
+                })
+            );
+        })
+    );
 });
 
-// Open a cache and use `addAll()` with an array of assets to add all of them
-// to the cache. Return a promise resolving when all the assets are added.
-function precache() {
-    return caches.open(cacheName).then(function (cache) {
-        return cache.addAll(cacheFiles);
-    });
-}
-
-// Open the cache where the assets were stored and search for the requested
-// resource. Notice that in case of no matching, the promise still resolves
-// but it does with `undefined` as value.
-function fromCache(request) {
-    return caches.open(cacheName).then(function (cache) {
-        return cache.match(request).then(function (matching) {
-            return matching || Promise.reject('no-match');
-        });
-    });
-}
-
-// Update consists in opening the cache, performing a network request and
-// storing the new response data.
-function update(request) {
-    return caches.open(cacheName).then(function (cache) {
-        return fetch(request).then(function (response) {
-            return cache.put(request, response);
-        });
-    });
-}
+self.addEventListener('fetch', function (event) {
+    event.respondWith(
+        caches.open(cacheName).then(function (cache) {
+            return cache.match(event.request).then(function (response) {
+                var fetchPromise = fetch(event.request).then(function (networkResponse) {
+                    if (event.request.method === "GET") {
+                        cache.put(event.request, networkResponse.clone());
+                    }
+                    return networkResponse;
+                }).catch(function () {
+                    console.log("Failed to update cache, network unavailable");
+                });
+                return response || fetchPromise;
+            }).catch(function () {
+                console.log("Failed to match cache and to update from the network");
+            })
+        })
+    );
+});
 

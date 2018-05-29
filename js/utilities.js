@@ -1,4 +1,3 @@
-
 export function isEmpty(value) {
     if (value === null || value === undefined) {
         return true;
@@ -20,8 +19,27 @@ export function isInArrayLowerCase(arr, val) {
     return arr.some(arrVal => isEqualToCaseInsensitive(arrVal, val));
 }
 
+function arrToLowerCase(e) {
+    return typeof e === 'string' ? e.toLowerCase() : e;
+}
+
+function shuffle(array) {
+    let counter = array.length;
+    while (counter > 0) {
+        let index = Math.floor(Math.random() * counter);
+        counter--;
+        let temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+    return array;
+}
+
 export function removeDuplicatesArray(arr) {
-    return Array.from(new Set(arr.map((e => typeof e === 'string' ? e.toLowerCase() : e))));
+    return shuffle(arr.map(arrToLowerCase).reduce(function (a, b) {
+        if (a.indexOf(b) < 0) a.push(b);
+        return a;
+    }, []));
 }
 
 export function getUniqueValuesOfObjectsInMap(map, key) {

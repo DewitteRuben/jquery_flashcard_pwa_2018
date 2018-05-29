@@ -1,5 +1,7 @@
-import {init} from "./indexPage";
+import {init as initIndex} from "./indexPage";
+import {init as initStorage} from "../data"
 
-$(document).ready(function() {
-   init();
+$(document).ready(function () {
+    initStorage();
+    initIndex();
 });

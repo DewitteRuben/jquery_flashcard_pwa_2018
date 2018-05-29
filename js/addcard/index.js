@@ -1,9 +1,10 @@
 import {init as addCardInit} from "./addcard"
 import {init as addCardTranslateInit} from "./addcardtranslate"
 import {init as editCardInit} from "./editcard"
-import {storageClearPictureData} from "../data";
+import {storageClearPictureData, init as initStorage} from "../data";
 
 $(document).ready(function() {
+    initStorage();
     addCardInit();
     editCardInit();
     addCardTranslateInit();

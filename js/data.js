@@ -138,8 +138,6 @@ export function pAddHighscore(highscore) {
 }
 
 
-
-
 export function rebuildHighscores(arr) {
     return arr.map(score => Object.assign(new Highscore, score));
 }
@@ -178,14 +176,13 @@ export function pAddCardset(newCardset) {
             throw Error(ERROR.INVALID_CARDSET);
         let cardsets = cardsetMap.values();
         for (let cardset of cardsets) {
-            if (isCardsetEqual(cardset, newCardset))
+            if (isCardsetEqual(cardset, newCardset)) {
                 throw Error(ERROR.CARDSET_ALREADY_EXISTS);
+            }
         }
         return newCardset;
     }).then(function (uniqueCardset) {
         return pAddUpdateCardset(uniqueCardset);
-    }).catch(err => {
-        throw Error(ERROR.CARDSET_ADD_FAIL);
     });
 }
 
@@ -220,8 +217,6 @@ export function pAddCardToCardset(card, cardsetName) {
         return pAddUpdateCardset(cardset);
     }).then(function () {
         return Promise.resolve(`Sucessfully added card to the ${cardsetName} cardset!`);
-    }).catch((err) => {
-        throw Error(ERROR.CARD_ADD_FAIL)
     });
 }
 
@@ -237,9 +232,8 @@ export function pUpdateCard(card) {
     }).then(function () {
         return Promise.resolve(`Successfully updated the card ${card.title}!`);
     }).catch(function (err) {
-        console.error(err);
         throw Error("Failed to update card!");
-    })
+    });
 }
 
 export function pGetCardByID(cardID) {

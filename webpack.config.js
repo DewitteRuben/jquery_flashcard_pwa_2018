@@ -17,6 +17,7 @@ const webpackOption = {
     module: {
         rules: webpack_rules
     },
+    watch:true
 };
 let babelLoader = {
     test: /\.js$/,

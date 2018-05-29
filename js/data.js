@@ -1,7 +1,7 @@
 import {isEqualToCaseInsensitive} from "./utilities";
 import {showToast} from "./gui";
 import {CardSet, Highscore, Card} from "./domain";
-import localforage from "./libraries/localforage.min"
+// import localforage from "./libraries/localforage.min"
 
 
 const STORAGE = {
@@ -55,7 +55,6 @@ export function init() {
             }
         })
     }).catch((err) => {
-        console.log(err);
         throw Error("Failed to initialize cardset storage space");
     });
 }

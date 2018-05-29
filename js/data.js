@@ -77,9 +77,7 @@ export function pGetAllCardsets() {
         if (!result) return new Map();
         result.forEach(rebuildCardSetMap(result));
         return result;
-    }).catch(function (err) {
-        throw Error("Failed to retrieve all cardsets!");
-    })
+    });
 }
 
 function updateNameAndCategory(oldName, newCardset) {

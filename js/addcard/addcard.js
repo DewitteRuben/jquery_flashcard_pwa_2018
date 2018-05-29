@@ -73,7 +73,7 @@ function choicesInput2Arr(input, cAnswer) {
 function populateCardsetSelect() {
     pGetAllCardsets()
         .then(cardsetMap2OptionsHTML)
-        .then(populateSelectWithCardsetMap($("select[name='available-cardsets']")));
+        .then(populateSelectWithCardsetMap($("select[name='available-cardsets']"))).catch(err => console.log(err));
 }
 
 

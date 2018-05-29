@@ -162,6 +162,7 @@ export function pAddUpdateCardset(cardset) {
     }).then(function () {
         return Promise.resolve(`Successfully added the ${cardset.name} cardset!`);
     }).catch(function (err) {
+        console.log(err);
         throw Error(ERROR.CARDSET_ADD_FAIL);
     })
 }

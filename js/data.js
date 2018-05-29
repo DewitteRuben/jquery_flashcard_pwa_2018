@@ -1,7 +1,7 @@
 import {isEqualToCaseInsensitive} from "./utilities";
 import {showToast} from "./gui";
 import {CardSet, Highscore, Card} from "./domain";
-import localforage from "./libraries/localforage.min"
+import localforage from "./libraries/localforage.min";
 
 
 const STORAGE = {
@@ -338,7 +338,13 @@ export function getSettings() {
     return null;
 }
 
+export function setCurrentEditedCardset(cardsetName) {
+    sessionStorage.setItem(KEYS.CURRENT_CARDSET, cardsetName);
+}
 
+
+
+//
 export function saveSettings(settings) {
     if (window.localStorage) {
         localStorage.setItem(KEYS.SETTINGS, JSON.stringify(settings));
@@ -348,6 +354,3 @@ export function saveSettings(settings) {
     }
 }
 
-export function setCurrentEditedCardset(cardsetName) {
-    sessionStorage.setItem(KEYS.CURRENT_CARDSET, cardsetName);
-}

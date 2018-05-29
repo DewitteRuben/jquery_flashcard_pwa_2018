@@ -55,6 +55,7 @@ export function init() {
             }
         })
     }).catch((err) => {
+        console.log(err);
         throw Error("Failed to initialize cardset storage space");
     });
 }

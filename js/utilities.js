@@ -1,83 +1,66 @@
-"use strict";
 
-let UtilModule = function () {
-    function isEmpty(value) {
-        if (value === null || value === undefined) {
-            return true;
+export function isEmpty(value) {
+    if (value === null || value === undefined) {
+        return true;
+    }
+    if (typeof value === 'string') {
+        return $.trim(value).length === 0;
+    }
+    return false;
+}
+
+export function isEqualToCaseInsensitive(val1, val2) {
+    if (typeof val1 === 'string' && typeof val2 === 'string') {
+        return val1.toLowerCase() === val2.toLowerCase();
+    }
+    return val1 === val2;
+}
+
+export function isInArrayLowerCase(arr, val) {
+    return arr.some(arrVal => isEqualToCaseInsensitive(arrVal, val));
+}
+
+export function removeDuplicatesArray(arr) {
+    return Array.from(new Set(arr.map((e => typeof e === 'string' ? e.toLowerCase() : e))));
+}
+
+export function getUniqueValuesOfObjectsInMap(map, key) {
+    let uniques = [];
+    map.forEach((item) => {
+        console.log(item);
+        if (uniques.indexOf(item[key]) < 0) {
+            uniques.push(item[key]);
         }
-        if (typeof value === 'string') {
-            return $.trim(value).length === 0;
-        }
-        return false;
-    }
+    });
+    return uniques;
+}
 
-    function isEqualToCaseInsensitive(val1, val2) {
-        if (typeof val1 === 'string' && typeof val2 === 'string') {
-            return val1.toLowerCase() === val2.toLowerCase();
-        }
-        return val1 === val2;
-    }
+export function scrollToBottom() {
+    $('html,body').animate({scrollTop: document.body.scrollHeight}, "fast");
+}
 
-    function isInArrayLowerCase(arr, val) {
-        return arr.some(arrVal => isEqualToCaseInsensitive(arrVal, val));
-    }
+export function cardsetNameComparator(a, b) {
+    if (a.name.toLowerCase() < b.name.toLowerCase())
+        return -1;
+    if (a.name.toLowerCase() > b.name.toLowerCase())
+        return 1;
+    return 0;
+}
 
-    function removeDuplicatesArray(arr) {
-        return Array.from(new Set(arr.map((e => typeof e === 'string' ? e.toLowerCase() : e))));
-    }
+export function validateSelect() {
+    // hack to make materialize select validate
+    $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
+}
 
-    function getUniqueValuesOfObjectsInMap(map, key) {
-        let uniques = [];
-        map.forEach((item) => {
-            console.log(item);
-            if (uniques.indexOf(item[key]) < 0) {
-                uniques.push(item[key]);
-            }
-        });
-        return uniques;
-    }
+export function getSelectOptionByName(selectName) {
+    return $(`select[name="${selectName}"]`).find("option:selected").val();
+}
 
-    function scrollToBottom() {
-        $('html,body').animate({scrollTop: document.body.scrollHeight}, "fast");
-    }
+export function isOnline() {
+    return navigator.onLine;
+}
 
-    function cardsetNameComparator(a, b) {
-        if (a.name.toLowerCase() < b.name.toLowerCase())
-            return -1;
-        if (a.name.toLowerCase() > b.name.toLowerCase())
-            return 1;
-        return 0;
-    }
-
-    function validateSelect() {
-        // hack to make materialize select validate
-        $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
-    }
-
-    function getSelectOptionByName(selectName) {
-        return $(`select[name="${selectName}"]`).find("option:selected").val();
-    }
-
-    function isOnline() {
-        return navigator.onLine;
-    }
-
-    function fDefault(e) {
-        e.preventDefault();
-        return undefined;
-    }
-
-    return {
-        isEmpty: isEmpty,
-        isEqualToCaseInsensitive: isEqualToCaseInsensitive,
-        isInArrayLowerCase: isInArrayLowerCase,
-        removeDuplicatesArray: removeDuplicatesArray,
-        scrollToBottom:scrollToBottom,
-        cardsetNameComparator:cardsetNameComparator,
-        validateSelect:validateSelect,
-        isOnline:isOnline,
-        getSelectOptionByName:getSelectOptionByName,
-        fDefault:fDefault,
-        getUniqueValuesOfObjectsInMap: getUniqueValuesOfObjectsInMap,
-    }
-}();
+export function fDefault(e) {
+    e.preventDefault();
+    return undefined;
+}

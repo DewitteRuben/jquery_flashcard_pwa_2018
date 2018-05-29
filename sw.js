@@ -11,22 +11,15 @@ var cacheFiles = [
     "css/screen.css",
     "css/materialize.min.css",
     "css/font-awesome.min.css",
-    "js/addcard.js",
-    "js/addcardset.js",
-    "js/addcardtranslate.js",
-    "js/editcard.js",
-    "js/DataModule.js",
-    "js/DomainModule.js",
-    "js/GameModule.js",
-    "js/gameoverview.js",
-    "js/gamePage.js",
-    "js/index.js",
     "js/jquery-3.3.1.min.js",
-    "js/localforage.min.js",
     "js/materialize.min.js",
     "js/materializeinit.js",
-    "js/translate.js",
-    "js/utilities.js",
+    "dist/addcard-bundle.js",
+    "dist/addcardset-bundle.js",
+    "dist/cardgame-bundle.js",
+    "dist/gameoverview-bundle.js",
+    "dist/index-bundle.js",
+    "dist/settings-bundle.js"
 ];
 
 self.addEventListener('install', function (e) {

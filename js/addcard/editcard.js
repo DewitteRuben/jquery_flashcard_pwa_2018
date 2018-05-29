@@ -17,7 +17,6 @@ function changeButtonText() {
 
 function evUpdateCard(e) {
     e.preventDefault();
-    console.log(editingCard);
     let card = getCardFromInput();
     card.id = editingCard.id;
     pUpdateCard(card).then(function (msg) {

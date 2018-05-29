@@ -27,7 +27,6 @@ export function removeDuplicatesArray(arr) {
 export function getUniqueValuesOfObjectsInMap(map, key) {
     let uniques = [];
     map.forEach((item) => {
-        console.log(item);
         if (uniques.indexOf(item[key]) < 0) {
             uniques.push(item[key]);
         }

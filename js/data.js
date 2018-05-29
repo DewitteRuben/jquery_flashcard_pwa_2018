@@ -87,7 +87,6 @@ function updateNameAndCategory(oldName, newCardset) {
         let tempObj = cardMap.get(oldName);
         cardMap.delete(oldName);
         cardMap.set(newCardset.name, tempObj);
-        console.log(cardMap);
         cardMap.forEach(function (cardset) {
             if (cardset.name === oldName) {
                 cardset.name = newCardset.name;
@@ -142,18 +141,13 @@ export function pAddHighscore(highscore) {
 
 
 export function rebuildHighscores(arr) {
-    console.log(arr);
-    console.log(arr.map(score => Object.assign(new Highscore, score)));
     return arr.map(score => Object.assign(new Highscore, score));
 }
 
 export function pGetAllHighscores() {
     return store.getItem(STORAGE.HIGHSCORES).then(function (highscores) {
-        console.log(highscores);
-        console.log(rebuildHighscores(highscores));
         return rebuildHighscores(highscores);
     }).catch(function (err) {
-        console.log(err);
         throw Error("Failed to get all highscores!");
     })
 }

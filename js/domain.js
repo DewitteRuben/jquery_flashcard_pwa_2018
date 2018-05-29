@@ -131,7 +131,6 @@ Card.prototype.render = function () {
                                     <span class="card-title">${this.title}</span>`;
 
     if (this.image) {
-        console.log(this.image);
         HTMLString += `<div class="center">
                                   <img class="responsive-img" src="${this.image.data}" alt="card-image" title="card-image"">
                            </div>`;

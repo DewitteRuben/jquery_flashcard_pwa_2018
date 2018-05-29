@@ -72,7 +72,6 @@ function evClearAllData(e) {
 
 function evSaveSettings(e) {
     e.preventDefault();
-    console.log($(this).serializeArray());
     saveSettings($(this).serializeArray());
 }
 

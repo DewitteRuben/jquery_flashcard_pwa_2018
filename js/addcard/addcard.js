@@ -1,4 +1,11 @@
-import {fDefault, getSelectOptionByName, isEmpty, isInArrayLowerCase, validateSelect} from "../utilities";
+import {
+    fDefault,
+    getSelectOptionByName,
+    isEmpty,
+    isInArrayLowerCase,
+    removeDuplicatesArray,
+    validateSelect
+} from "../utilities";
 import {Card, Image} from "../domain";
 import {
     KEYS,
@@ -146,7 +153,6 @@ export function updateImageSpan() {
     let imageSpan = $("#imageName");
     let imageFile = storageGetLoadedPicture();
     if (imageFile) {
-        console.log(imageFile);
         imageSpan.text(imageFile.name).addClass("green-text")
             .next().removeClass("hidden");
     } else {
@@ -189,7 +195,6 @@ function evAddCardToCardset(e) {
 
     let cSetName = getSelectOptionByName("available-cardsets");
     let card = getCardFromInput();
-    console.log(card);
     pAddCardToCardset(card, cSetName)
         .then(msg => {
                 resetForm();

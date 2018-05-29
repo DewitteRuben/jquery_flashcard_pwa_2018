@@ -248,7 +248,6 @@ function evTriggerCardDelete(e) {
     e.preventDefault();
     let cardID = $(this).parent().attr("id");
     let cardTitle = $(this).siblings(".card-content").find(".card-title").text();
-    console.log(cardID, cardTitle);
     showDeleteCardModal(cardID, cardTitle);
 }
 

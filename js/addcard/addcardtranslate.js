@@ -39,7 +39,6 @@ function translateTextField(value, targetLanguage) {
     if (!isEmpty(value)) {
         $progressbar.removeClass("hidden");
         translate(value, targetLanguage).then(function (result) {
-            console.log(result);
             $("#card-ouput-t").val(result.text[0]);
             $("#card-answer").val(result.text[0]);
             $progressbar.addClass("hidden");

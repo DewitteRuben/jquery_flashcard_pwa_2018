@@ -36,6 +36,6 @@ https://dewitteruben.github.io/2018_SSE_Dewitte_Ruben/
 
 # Screencast
 Available on youtube here:
-//
+https://www.youtube.com/watch?v=KRdSdp4itmc&feature=youtu.be
 
-As well as inside the .zip file under the name "screencast-demo".
+As well as inside the .zip file under the name "screencast-demo.mp4".
